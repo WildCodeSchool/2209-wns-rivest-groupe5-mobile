@@ -4,7 +4,7 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import Constants from "expo-constants";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StyleSheet} from "react-native";
 import { HomeScreen } from "./screens/HomeScreen";
@@ -14,9 +14,17 @@ import { GoodDealsScreen } from "./screens/GoodDealsScreen";
 import { GoodDealDetailScreen } from "./screens/GoodDealDetailScreen";
 
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "#FFFFFF",
+    primary: "#2ECE65",
+  },
+};
+
+
 const { manifest } = Constants;
-
-
 const uri = manifest?.debuggerHost && `http://${manifest.debuggerHost.split(':').shift()}:5050`;
 
 const client = new ApolloClient({
@@ -30,10 +38,10 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Inscription">
+        <Drawer.Navigator initialRouteName="Register">
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Login" component={LoginScreen} />
-          <Drawer.Screen name="Inscription" component={RegisterScreen} />
+          <Drawer.Screen name="Register" component={RegisterScreen} />
           <Drawer.Screen name="GoodDeals" component={GoodDealsScreen} />
           <Drawer.Screen
             name="GoodDealDetail"
