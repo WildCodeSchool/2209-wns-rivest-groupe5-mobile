@@ -87,7 +87,7 @@ export default function App() {
     <ApolloProvider client={client}>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Register"
+          initialRouteName="Home"
           drawerContent={(props) => <CustomDrawerContent {...props} />}
         >
           <Drawer.Screen name="Home" component={HomeScreen} />
