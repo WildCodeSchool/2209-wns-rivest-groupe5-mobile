@@ -33,7 +33,7 @@ export const HomeScreen = ({ navigation }) => {
           tintColor="#fff"
           style={{ margin: 10 }}
           onPress={() => {
-            navigation.navigate("Inscription");
+            navigation.navigate("Register");
           }}
         />
         <Button
