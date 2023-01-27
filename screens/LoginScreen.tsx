@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import { gql, useLazyQuery } from "@apollo/client";
 import { SafeAreaView, ScrollView, Text, View, StyleSheet } from "react-native";
 import { Stack, TextInput, Button } from "@react-native-material/core";
@@ -17,6 +18,11 @@ const GET_TOKEN_LOGIN = gql`
     }
   }
 `;
+
+async function saveTokenInSecureStore(key: string, value: string) {
+  await SecureStore.setItemAsync(key, value);
+}
+
 
 export const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -67,9 +73,9 @@ export const LoginScreen = ({ navigation }) => {
               await getToken({
                 variables: { email, password },
                 onCompleted(data) {
-                  //store token in async storage
-                  //   localStorage.setItem("token", data.getToken.token);
-                  //   localStorage.setItem("user", JSON.stringify(data.getToken.userFromDB));
+                  //store token via secure store 
+                  console.log('>>>>DATA FROM LOGIN >>>>',data)
+                  saveTokenInSecureStore('token', data.getToken.token);
                   navigation.navigate("Home");
                 },
                 onError(error) {
