@@ -1,23 +1,20 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Constants from "expo-constants";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LoginScreen } from "./screens/LoginScreen";
 import { RegisterScreen } from "./screens/RegisterScreen";
 import { GoodDealsScreen } from "./screens/GoodDealsScreen";
 import { GoodDealDetailScreen } from "./screens/GoodDealDetailScreen";
-
+import ActivitiesScreen from "./screens/activities/ActivitiesScreen";
 
 const { manifest } = Constants;
 
-
-const uri = manifest?.debuggerHost && `http://${manifest.debuggerHost.split(':').shift()}:5050`;
+const uri =
+  manifest?.debuggerHost &&
+  `http://${manifest.debuggerHost.split(":").shift()}:5050`;
 
 const client = new ApolloClient({
   uri: uri,
@@ -39,6 +36,7 @@ export default function App() {
             name="GoodDealDetail"
             component={GoodDealDetailScreen}
           />
+          <Drawer.Screen name="Activities" component={ActivitiesScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     </ApolloProvider>
