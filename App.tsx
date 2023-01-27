@@ -66,14 +66,9 @@ const client = new ApolloClient({
 });
 
 const logout = async (props: any) => {
-  console.log("### CALL LOGOUT");
-
-  await SecureStore.deleteItemAsync("token");
-
-  const tokenInStore = await SecureStore.getItemAsync("token");
-  console.log("🚀 ~ file: App.tsx:72 ~ logout ~ tokenInStore", tokenInStore);
-
   props.navigation.navigate("Home");
+  await SecureStore.deleteItemAsync("token");
+  await client.resetStore();
 };
 
 const Drawer = createDrawerNavigator();
