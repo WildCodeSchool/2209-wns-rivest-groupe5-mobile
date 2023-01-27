@@ -9,7 +9,11 @@ const Tab = createBottomTabNavigator();
 const ActivitiesTab = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="MyActivities" component={MyActivitiesScreen} />
+      <Tab.Screen
+        name="MyActivities"
+        component={MyActivitiesScreen}
+        options={{ unmountOnBlur: true }}
+      />
       <Tab.Screen name="CreateActivity" component={CreateActivityScreen} />
       <Tab.Screen
         name="CreateActivityType"

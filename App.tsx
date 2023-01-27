@@ -8,7 +8,12 @@ import * as SecureStore from "expo-secure-store";
 import { setContext } from "@apollo/client/link/context";
 import Constants from "expo-constants";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { StyleSheet } from "react-native";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LoginScreen } from "./screens/LoginScreen";
@@ -60,13 +65,36 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const logout = async (props: any) => {
+  console.log("### CALL LOGOUT");
+
+  await SecureStore.deleteItemAsync("token");
+
+  const tokenInStore = await SecureStore.getItemAsync("token");
+  console.log("🚀 ~ file: App.tsx:72 ~ logout ~ tokenInStore", tokenInStore);
+
+  props.navigation.navigate("Home");
+};
+
 const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props: any) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="Logout" onPress={() => logout(props)} />
+    </DrawerContentScrollView>
+  );
+}
 
 export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Register">
+        <Drawer.Navigator
+          initialRouteName="Register"
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
+        >
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Login" component={LoginScreen} />
           <Drawer.Screen name="Register" component={RegisterScreen} />
