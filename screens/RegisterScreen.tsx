@@ -1,14 +1,15 @@
 import { gql, useMutation } from "@apollo/client";
+import { Stack, Button, TextInput } from "@react-native-material/core";
 import { useState } from "react";
 import {
   SafeAreaView,
   Text,
-  TextInput,
   View,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useTheme, Link } from "@react-navigation/native";
 
 const CREATE_USER = gql`
   mutation CreateUser(
@@ -45,8 +46,8 @@ export const RegisterScreen = ({ navigation }) => {
     email: string,
     password: string
   ) {
-    if(password !== confirmPassword) {
-      return(alert('Mots de passe différents'))
+    if (password !== confirmPassword) {
+      return alert("Mots de passe différents");
     }
     createUser({
       variables: {
@@ -61,7 +62,7 @@ export const RegisterScreen = ({ navigation }) => {
         setLastname("");
         setEmail("");
         setPassword("");
-        setConfirmPassword("")
+        setConfirmPassword("");
         navigation.navigate("Login");
       },
       onError(error) {
@@ -84,53 +85,65 @@ export const RegisterScreen = ({ navigation }) => {
           >
             Rejoins la communauté WildCarbon
           </Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Prénom"
-            value={firstname}
-            autoCapitalize="none"
-            onChangeText={(text) => setFirstname(text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Nom"
-            value={lastname}
-            autoCapitalize="none"
-            onChangeText={(text) => setLastname(text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            autoCapitalize="none"
-            onChangeText={(text) => setEmail(text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            secureTextEntry={true}
-            autoCapitalize="none"
-            onChangeText={(text) => setPassword(text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password Confirm"
-            value={confirmPassword}
-            secureTextEntry={true}
-            autoCapitalize="none"
-            onChangeText={(text) => setConfirmPassword(text)}
-          />
-          <TouchableOpacity
+          <Stack spacing={20} style={{ marginLeft: 25, marginRight: 25 }}>
+            <TextInput
+              label="Prénom"
+              value={firstname}
+              autoCapitalize="none"
+              variant="outlined"
+              color="grey"
+              onChangeText={(text) => setFirstname(text)}
+            />
+            <TextInput
+              label="Nom"
+              value={lastname}
+              autoCapitalize="none"
+              variant="outlined"
+              color="grey"
+              onChangeText={(text) => setLastname(text)}
+            />
+            <TextInput
+              label="Email"
+              value={email}
+              autoCapitalize="none"
+              variant="outlined"
+              color="grey"
+              onChangeText={(text) => setEmail(text)}
+            />
+            <TextInput
+              label="Mot de passe"
+              value={password}
+              secureTextEntry={true}
+              autoCapitalize="none"
+              variant="outlined"
+              color="grey"
+              onChangeText={(text) => setPassword(text)}
+            />
+            <TextInput
+              label="Confirmez le mot de passe"
+              value={confirmPassword}
+              secureTextEntry={true}
+              autoCapitalize="none"
+              variant="outlined"
+              color="grey"
+              onChangeText={(text) => setConfirmPassword(text)}
+            />
+          </Stack>
+
+          <Button
+            title="S'inscrire"
+            color="#2ECE65"
+            tintColor="#FFFFFF"
             style={styles.button}
+            loading={loading}
+            loadingIndicatorPosition="overlay"
             onPress={() => handleSubmit(firstname, lastname, email, password)}
-          >
-            <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>
-              S'inscrire
-            </Text>
-          </TouchableOpacity>
+          />
           <Text style={{ textAlign: "center", marginTop: 20 }}>
-            Déjà membre? Connecte-toi
+            Déjà membre?{" "}
+            <Link style={{ color: "#2ECE65" }} to={{ screen: "Login" }}>
+              Connecte-toi
+            </Link>
           </Text>
         </View>
       </ScrollView>
@@ -158,5 +171,6 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    fontWeight: "bold",
   },
 });
