@@ -8,13 +8,19 @@ import * as SecureStore from "expo-secure-store";
 import { setContext } from "@apollo/client/link/context";
 import Constants from "expo-constants";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { StyleSheet } from "react-native";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LoginScreen } from "./screens/LoginScreen";
 import { RegisterScreen } from "./screens/RegisterScreen";
 import { GoodDealsScreen } from "./screens/GoodDealsScreen";
 import { GoodDealDetailScreen } from "./screens/GoodDealDetailScreen";
+import ActivitiesScreen from "./screens/activities/ActivitiesScreen";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -33,12 +39,11 @@ async function getValueFor(key: string): Promise<string | null> {
     return null;
   }
 }
-
 const { manifest } = Constants;
+
 const uri =
   manifest?.debuggerHost &&
   `http://${manifest.debuggerHost.split(":").shift()}:5050`;
-
 const httpLink = createHttpLink({
   uri: uri,
 });
@@ -60,13 +65,31 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const logout = async (props: any) => {
+  props.navigation.navigate("Home");
+  await SecureStore.deleteItemAsync("token");
+  await client.resetStore();
+};
+
 const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props: any) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="Logout" onPress={() => logout(props)} />
+    </DrawerContentScrollView>
+  );
+}
 
 export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator
+          initialRouteName="Home"
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
+        >
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Login" component={LoginScreen} />
           <Drawer.Screen name="Register" component={RegisterScreen} />
@@ -75,6 +98,7 @@ export default function App() {
             name="GoodDealDetail"
             component={GoodDealDetailScreen}
           />
+          <Drawer.Screen name="Activities" component={ActivitiesScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     </ApolloProvider>
