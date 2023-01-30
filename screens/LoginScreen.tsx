@@ -4,6 +4,8 @@ import { SafeAreaView, ScrollView, Text, View, StyleSheet } from "react-native";
 import { Stack, TextInput, Button } from "@react-native-material/core";
 import { useTheme, Link } from "@react-navigation/native";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../atom/currentUserAtom";
 
 const GET_TOKEN_LOGIN = gql`
   query GetToken($email: String!, $password: String!) {
@@ -28,6 +30,8 @@ export const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const { colors } = useTheme();
   const [getToken, { loading, error }] = useLazyQuery(GET_TOKEN_LOGIN);
+  const [user, setUser] = useRecoilState(currentUserState);
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -75,7 +79,13 @@ export const LoginScreen = ({ navigation }) => {
                   //store token via secure store
                   console.log(">>>>DATA FROM LOGIN >>>>", data);
                   saveTokenInSecureStore("token", data.getToken.token);
-                  navigation.navigate("Home");
+                  setUser(data.userFromDB);
+                  navigation.navigate("Activités", {
+                    screen: "ActivitiesTab",
+                    params: {
+                      screen: "Mes Activités",
+                    },
+                  });
                 },
                 onError(error) {
                   console.log(error);
