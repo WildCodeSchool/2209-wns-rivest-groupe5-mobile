@@ -12,7 +12,7 @@ const ActivitiesTab = () => {
       initialRouteName="Mes Activités"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName = "link";
+          let iconName: keyof typeof Ionicons.glyphMap | undefined;
 
           if (route.name === "Mes Activités") {
             iconName = focused ? "car" : "car-outline";
