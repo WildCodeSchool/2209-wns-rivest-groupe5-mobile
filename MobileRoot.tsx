@@ -15,6 +15,7 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
+import { CreateGoodDealScreen } from "./screens/CreateGoodDealScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -81,6 +82,10 @@ const MobileRoot = ({ resetClient }) => {
             drawerItemStyle: { display: user !== null ? "flex" : "none" },
           }}
         />
+         <Drawer.Screen
+            name="CreateGoodDeal"
+            component={CreateGoodDealScreen}
+          />
       </Drawer.Navigator>
     </NavigationContainer>
   );
