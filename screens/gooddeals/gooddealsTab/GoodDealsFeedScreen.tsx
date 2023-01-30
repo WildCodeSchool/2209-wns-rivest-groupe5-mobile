@@ -1,9 +1,9 @@
-import {Text, SafeAreaView, ScrollView, FlatList} from 'react-native';
+import { Text, SafeAreaView, ScrollView, FlatList, View } from "react-native";
 
-import {GoodDealCardFeed} from '../../../components/GoodDealCardFeed';
-import {GoodDealCardFeedPrimary} from '../../../components/GoodDealCardFeedPrimary';
-import {gql, useQuery} from '@apollo/client';
-import {IGoodDeal} from '../../../interfaces/IGoodDeal';
+import { GoodDealCardFeed } from "../../../components/GoodDealCardFeed";
+import { GoodDealCardFeedPrimary } from "../../../components/GoodDealCardFeedPrimary";
+import { gql, useQuery } from "@apollo/client";
+import { IGoodDeal } from "../../../interfaces/IGoodDeal";
 
 const GET_ALL_GOOD_DEALS = gql`
   query getAllGoodDeals {
@@ -23,8 +23,8 @@ const GET_ALL_GOOD_DEALS = gql`
   }
 `;
 
-const GoodDealsFeedScreen = ({navigation}: any) => {
-  const {loading, error, data} = useQuery(GET_ALL_GOOD_DEALS);
+const GoodDealsFeedScreen = ({ navigation }: any) => {
+  const { loading, error, data } = useQuery(GET_ALL_GOOD_DEALS);
   if (loading) {
     return <Text>Loading</Text>;
   }
@@ -35,32 +35,19 @@ const GoodDealsFeedScreen = ({navigation}: any) => {
 
   if (data) {
     return (
-      <SafeAreaView>
-        {/* <GoodDealCardFeedPrimary />
-
-        <FlatList
-          data={data.getAllGoodDeals}
-          renderItem={({item}) => (
-            <GoodDealCardFeed
-              key={item.goodDealId}
-              goodDeal={item}
-              navigation={navigation}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-        /> */}
-
-          <ScrollView>
-            <GoodDealCardFeedPrimary />
-
-            {data.getAllGoodDeals.map((goodDeal: IGoodDeal) => (
+      <SafeAreaView style={{flex:1}}>
+          <GoodDealCardFeedPrimary />
+          <FlatList
+            data={data.getAllGoodDeals}
+            renderItem={({ item }) => (
               <GoodDealCardFeed
-                key={goodDeal.goodDealId}
-                goodDeal={goodDeal}
+                key={item.goodDealId}
+                goodDeal={item}
                 navigation={navigation}
               />
-            ))}
-          </ScrollView>
+            )}
+            keyExtractor={(item) => item.id}
+          />
       </SafeAreaView>
     );
   }

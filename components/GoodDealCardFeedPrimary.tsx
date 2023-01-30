@@ -2,7 +2,7 @@ import {Text, View, ImageBackground, StyleSheet} from 'react-native';
 
 export const GoodDealCardFeedPrimary = () => {
   return (
-    <View>
+    <View style={{flex:1}}>
       <ImageBackground
         source={require('../assets/background-good-deals.jpg')}
         resizeMode="cover"
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     marginRight: 30,
     marginLeft: 30,
     marginTop: 20,
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
