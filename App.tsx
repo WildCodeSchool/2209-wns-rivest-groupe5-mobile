@@ -53,7 +53,7 @@ const resetClient = async () => {
   await client.clearStore();
 };
 
-export const client = new ApolloClient({
+const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
