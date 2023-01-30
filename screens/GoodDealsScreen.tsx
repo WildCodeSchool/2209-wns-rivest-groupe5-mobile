@@ -10,7 +10,7 @@ import {
 import {GoodDealCardFeed} from '../components/GoodDealCardFeed';
 import {GoodDealCardFeedPrimary} from '../components/GoodDealCardFeedPrimary';
 import {gql, useQuery} from '@apollo/client';
-import {GoodDealInterface} from '../interfaces/goodDeal';
+import {GoodDealInterface} from '../interfaces/IGoodDeal';
 
 const GET_ALL_GOOD_DEALS = gql`
   query getAllGoodDeals {
@@ -31,7 +31,7 @@ const GET_ALL_GOOD_DEALS = gql`
 `;
 
 export const GoodDealsScreen = () => {
-    const { loading, error, data } = useQuery(GET_ALL_GOOD_DEALS);
+  const {loading, error, data} = useQuery(GET_ALL_GOOD_DEALS);
   if (loading) {
     return <Text>Loading</Text>;
   }
@@ -39,7 +39,7 @@ export const GoodDealsScreen = () => {
   if (error) {
     return <Text>{error.message}</Text>;
   }
-  
+
   if (data) {
     console.log(data.getAllGoodDeals);
 
@@ -49,12 +49,10 @@ export const GoodDealsScreen = () => {
           <GoodDealCardFeedPrimary />
 
           {data.getAllGoodDeals.map((goodDeal: GoodDealInterface) => (
-          <GoodDealCardFeed key={goodDeal.goodDealId} goodDeal={goodDeal} />
-        ))}
+            <GoodDealCardFeed key={goodDeal.goodDealId} goodDeal={goodDeal} />
+          ))}
         </ScrollView>
       </SafeAreaView>
     );
   }
-
-  
 };

@@ -1,6 +1,6 @@
 import { Text } from "react-native"
 
-export const GoodDealDetailScreen = () => {
+export const GoodDealDetailsScreen = () => {
     return (
         <Text>GoodDealDetailScreen</Text>
     )

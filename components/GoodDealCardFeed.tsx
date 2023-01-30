@@ -1,6 +1,12 @@
 import {Text, View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 export const GoodDealCardFeed = (props: any) => {
+  const onPress = () => {
+    props.navigation.navigate('GoodDealsDetails', {
+      goodDeal: props.goodDeal,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -20,7 +26,7 @@ export const GoodDealCardFeed = (props: any) => {
         <Text style={{fontSize: 12}}>
           {props.goodDeal.user.firstname} {props.goodDeal.user.lastname}
         </Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={onPress}>
           <Text>Voir le bon plan</Text>
         </TouchableOpacity>
       </View>
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgreen',
     padding: 10,
     marginLeft: 50,
-    borderRadius: 5
+    borderRadius: 5,
   },
   container: {
     backgroundColor: '#DDDDDD',

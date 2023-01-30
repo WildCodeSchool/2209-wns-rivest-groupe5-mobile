@@ -1,4 +1,4 @@
-export interface GoodDealInterface {
+export interface IGoodDeal {
     goodDealId: number
     goodDealTitle: string
     goodDealContent: string
