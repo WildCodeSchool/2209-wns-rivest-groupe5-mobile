@@ -25,13 +25,23 @@ const GoodDealsDetailsScreen = ({route}: any) => {
 
   const label = goodDeal.user.firstname + ' ' + goodDeal.user.lastname
 
+  const default_image = require('../../assets/default-placeholder.png')
+
   return (
     <View>
-      <ImageBackground
-        source={{uri: goodDeal.image}}
-        resizeMode="cover"
-        style={styles.image}
-      ></ImageBackground>
+      {goodDeal.image ? (
+        <ImageBackground
+          source={{uri: goodDeal.image}}
+          resizeMode="cover"
+          style={styles.image}
+        ></ImageBackground>
+      ) : (
+        <ImageBackground
+          source={default_image}
+          resizeMode="cover"
+          style={styles.image}
+        ></ImageBackground>
+      )}
       <Text style={styles.title}>{goodDeal.goodDealTitle}</Text>
       <Text style={styles.content}>{goodDeal.goodDealContent}</Text>
       <Stack direction="row" items="center">
@@ -45,9 +55,11 @@ const GoodDealsDetailsScreen = ({route}: any) => {
             {goodDeal.user.firstname} {goodDeal.user.lastname}
           </Text>
         </Stack>
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
-          <Text>Accéder au bon plan</Text>
-        </TouchableOpacity>
+        {goodDeal.goodDealLink && (
+          <TouchableOpacity style={styles.button} onPress={handlePress}>
+            <Text>Accéder au bon plan</Text>
+          </TouchableOpacity>
+        )}
       </Stack>
     </View>
   );

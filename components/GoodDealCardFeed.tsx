@@ -7,11 +7,17 @@ export const GoodDealCardFeed = (props: any) => {
     });
   };
 
+  const default_image = require('../assets/default-placeholder.png');
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <View style={{height: 80, width: 80, borderRadius: 5, margin: 20}}>
-          <Image style={styles.image} source={{uri: props.goodDeal.image}} />
+          {props.goodDeal.image ? (
+            <Image style={styles.image} source={{uri: props.goodDeal.image }} />
+          ) : (
+            <Image style={styles.image} source={default_image} />
+          )}
         </View>
         <View style={{flex: 1, marginRight: 20}}>
           <Text style={styles.title} numberOfLines={1}>
