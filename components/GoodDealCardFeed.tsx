@@ -37,7 +37,7 @@ export const GoodDealCardFeed = (props: any) => {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#17b2aa',
     padding: 10,
     marginLeft: 50,
     borderRadius: 5,

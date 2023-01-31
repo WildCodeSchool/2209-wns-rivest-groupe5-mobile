@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import {View, Text, StyleSheet} from 'react-native';
 import React from "react";
 import { IActivity } from "../../interfaces/IActivity";
 import { formatDateToDDMMYY } from "../../helpers/formatter";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const ActivityDetailsScreen = ({ route, navigation }) => {
+const ActivityDetailsScreen = ({ route, navigation } : any) => {
   const { activity }: { activity: IActivity } = route.params;
   return (
     <ScrollView style={styles.container}>

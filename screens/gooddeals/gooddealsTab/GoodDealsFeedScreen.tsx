@@ -15,9 +15,11 @@ const GET_ALL_GOOD_DEALS = gql`
       image
       createdAt
       user {
+        userId
         email
         firstname
         lastname
+        avatar
       }
     }
   }
@@ -37,7 +39,7 @@ const GoodDealsFeedScreen = ({ navigation }: any) => {
     return (
       <SafeAreaView style={{flex:1}}>
           <GoodDealCardFeedPrimary />
-          <FlatList
+        <FlatList
             data={data.getAllGoodDeals}
             renderItem={({ item }) => (
               <GoodDealCardFeed
@@ -46,7 +48,7 @@ const GoodDealsFeedScreen = ({ navigation }: any) => {
                 navigation={navigation}
               />
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.goodDealId}
           />
       </SafeAreaView>
     );
@@ -54,5 +56,8 @@ const GoodDealsFeedScreen = ({ navigation }: any) => {
 
   return <Text>Erreur</Text>;
 };
+
+
+
 
 export default GoodDealsFeedScreen;

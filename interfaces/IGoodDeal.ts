@@ -1,4 +1,5 @@
 export interface IGoodDeal {
+    userId : number
     goodDealId: number
     goodDealTitle: string
     goodDealContent: string
@@ -9,6 +10,7 @@ export interface IGoodDeal {
         email: string
         firstname: string
         lastname: string
+        avatar: string
     }
 
 }

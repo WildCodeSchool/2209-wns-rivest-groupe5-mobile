@@ -17,7 +17,7 @@ import * as SecureStore from "expo-secure-store";
 
 const Drawer = createDrawerNavigator();
 
-const MobileRoot = ({ resetClient }) => {
+const MobileRoot = ({ resetClient } : any) => {
   const [user, setUser] = useRecoilState(currentUserState);
 
   function CustomDrawerContent(props: any) {
