@@ -7,7 +7,6 @@ import {
 import * as SecureStore from "expo-secure-store";
 import { setContext } from "@apollo/client/link/context";
 import Constants from "expo-constants";
-import { DefaultTheme } from "@react-navigation/native";
 import { RecoilRoot } from "recoil";
 import MobileRoot from "./MobileRoot";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
