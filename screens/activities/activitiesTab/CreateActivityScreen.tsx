@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
-
 import {
   Stack,
   Button,
@@ -19,12 +18,12 @@ import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 const CreateActivityScreen = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [activityTypeId, setActivityTypeId] = useState(1);
   const [carbonQuantity, setCarbonQuantity] = useState("");
   const [datePicker, setDatePicker] = useState(false);
   const [activityDate, setActivityDate] = useState(new Date());
-  const [createActivity, { loading: loadingMesage }] =
-    useMutation(CREATE_ACTIVITY);
+  const [activityTypeId, setActivityTypeId] = useState(1);
+
+  //Fetch activity list types
   const {
     data: dataActivityTypes,
     loading: loadingActivityTypes,
@@ -32,39 +31,28 @@ const CreateActivityScreen = ({ navigation }) => {
   } = useQuery(GET_ACTIVITY_TYPES);
   console.log("------ liste type activities", dataActivityTypes);
 
-  //{"getAllActivityTypes": [{"__typename": "ActivityType", "activityTypeId": 1, "name": "Transport"}, {"__typename": "ActivityType", "activityTypeId": 2, "name": "Agriculture"}, {"__typename": "ActivityType", "activityTypeId": 3, "name": "Autre"}]}
+  //Create "activité" / "dépense carbone"
 
-  // const isFocused = useIsFocused();
+  const [
+    createActivity,
+    { loading: loadingCreateActivity, error: errorCreateActivity },
+  ] = useMutation(CREATE_ACTIVITY);
 
-  if (loadingActivityTypes) return "Loading activity types...";
-  if (errorActivityTypes) return ` Error! ${errorActivityTypes.message}`;
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     async function fetchActivityTypes() {
-  //       try {
-  //         const data = await getActivityTypes();
-  //         setActivityTypeId(data.activityTypeId);
-  //       } catch (error) {
-  //         console.log(
-  //           "🚀 ~ file: CreateActivityScreen.tsx ~ fetchActivityTypes ~ error",
-  //           error
-  //         );
-  //         setActivityTypeId(Number);
-  //       }
-  //     }
-  //     fetchActivityTypes();
-  //   }, [isFocused])
-  // );
+  if (loadingActivityTypes) return <Text>"Loading activity types..."</Text>;
+  if (errorActivityTypes)
+    return <Text>` Error! ${errorActivityTypes.message}`</Text>;
 
   const showDatePicker = () => {
-    setDatePicker(true);
+    setDatePicker(!datePicker);
   };
 
   const onDateSelected = (event, value) => {
     setActivityDate(value);
     setDatePicker(false);
+    console.log(">>>Selected date>>>>", value);
+    console.log(">>>Selected date type of >>>>", typeof value);
   };
+
 
   function handleSubmit(
     title: string,
@@ -90,106 +78,130 @@ const CreateActivityScreen = ({ navigation }) => {
         setActivityTypeId(1);
         setCarbonQuantity("");
         setActivityDate(new Date());
-        navigation.navigate("Activités");
+        navigation.navigate("ActivitiesTab");
       },
       onError(error) {
+        console.log('*****Activity creation failed*****', error.message)
         alert("Activity creation failed");
       },
     });
   }
 
+
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={{ paddingTop: 50 }}>
-          <Text
-            style={{
-              fontWeight: "bold",
-              textAlign: "center",
-              fontSize: 40,
-              marginBottom: 10,
-            }}
-          >
-            Enregistrer une activité carbone
+    <SafeAreaView style={{ flex: 1 }}>
+      {/* <ScrollView style={{ paddingTop: 50, backgroundColor: "blue" }}> */}
+      <ScrollView style={{ paddingTop: 50 }}>
+        {/* <Text
+          style={{
+            fontWeight: "bold",
+            textAlign: "center",
+            fontSize: 40,
+            marginBottom: 10,
+          }}
+        >
+          Enregistrer une activité carbone
+        </Text> */}
+
+        <Stack
+          spacing={20}
+          style={{
+            marginLeft: 25,
+            marginRight: 25,
+            backgroundColor: "red",
+            flex: 1,
+          }}
+        >
+          <Text>
+            {title} of type {typeof title}
           </Text>
-          <Stack spacing={20} style={{ marginLeft: 25, marginRight: 25 }}>
-            <TextInput
-              label="Titre"
-              value={title}
-              autoCapitalize="none"
-              variant="outlined"
-              color="grey"
-              onChangeText={(text) => setTitle(text)}
-            />
-            <TextInput
-              label="Description"
-              value={description}
-              autoCapitalize="none"
-              variant="outlined"
-              color="grey"
-              onChangeText={(text) => setDescription(text)}
-            />
-
-            {/* <TextInput
-              label="Date"
-              variant="outlined"
-              value={activityDate.toLocaleDateString("fr")}
-              onFocus={showDatePicker}
-              trailing={(props) => (
-                <IconButton
-                  icon={(props) => (
-                    <Icon name="calendar" {...props} onPress={showDatePicker} />
-                  )}
-                />
-              )}
-            /> */}
-
-            {datePicker && (
-              <DateTimePicker
-                value={activityDate}
-                mode={"date"}
-                display={Platform.OS === "ios" ? "spinner" : "default"}
-                onChange={onDateSelected}
+          <Text>
+            {description} of type {typeof description}
+          </Text>
+          <Text>
+            {carbonQuantity} of type {typeof carbonQuantity}
+          </Text>
+          <Text>
+            {activityDate.toLocaleString()} of type {typeof activityDate}
+          </Text>
+          activityTypeId
+          <Text>
+            {activityTypeId} of type {typeof activityTypeId}
+          </Text>
+          <TextInput
+            label="Titre"
+            value={title}
+            autoCapitalize="none"
+            variant="outlined"
+            color="grey"
+            onChangeText={(text) => setTitle(text)}
+          />
+          <TextInput
+            label="Description"
+            value={description}
+            autoCapitalize="none"
+            variant="outlined"
+            color="grey"
+            onChangeText={(text) => setDescription(text)}
+          />
+          <TextInput
+            label="Quantité de carbone"
+            value={carbonQuantity}
+            variant="outlined"
+            keyboardType={"numeric"}
+            onChangeText={(text) => setCarbonQuantity(text)}
+          />
+          <TextInput
+            label="Date"
+            variant="outlined"
+            value={activityDate.toLocaleDateString("fr")}
+            onFocus={showDatePicker}
+            trailing={(props) => (
+              <IconButton
+                icon={(props) => (
+                  <Icon name="calendar" {...props} onPress={showDatePicker} />
+                )}
               />
             )}
-
-            <Picker
-              selectedValue={activityTypeId}
-              style={{ height: 50, width: 150 }}
-              onValueChange={(itemValue, itemIndex) =>
-                setActivityTypeId(itemValue)
-              }
-            >
-              {dataActivityTypes &&
-                dataActivityTypes.getAllActivityTypes.map(
-                  (activityType: any) => (
-                    <Picker.Item
-                      label={activityType.name}
-                      value={activityType.activityTypeId}
-                      key={activityType.activityTypeId}
-                    />
-                  )
-                )}
-
-              {/* <Picker.Item label="Transport" value={1} />
-              <Picker.Item label="Agriculture" value={2} /> */}
-            </Picker>
-
-            {/* <TextInput
-              label="Quantité de carbone"
-              value={carbonQuantity}
-              variant="outlined"
-              keyboardType={"numeric"}
-              onChangeText={(text) => setCarbonQuantity(text)}
-            ></TextInput> */}
-          </Stack>
-
+          />
+          {/* {activityDate && <Text>{activityDate.toLocaleString()}</Text>} */}
+          {/* {false && ( */}
+          {datePicker && (
+            <DateTimePicker
+              value={activityDate}
+              mode={"date"}
+              display={Platform.OS === "ios" ? "spinner" : "default"}
+              onChange={onDateSelected}
+            />
+          )}
+          {/* <Picker
+            selectedValue={activityTypeId}
+            style={{ flex: 1, flexDirection:"row", height: 100}}
+            onValueChange={(itemValue) => setActivityTypeId(itemValue)}
+          >
+            {dataActivityTypes &&
+              dataActivityTypes.getAllActivityTypes.map((activityType: any) => (
+                <Picker.Item
+                  key={activityType.activityTypeId}
+                  label={activityType.name}
+                  value={activityType.activityTypeId}
+                />
+              ))}
+          </Picker> */}
+          {dataActivityTypes &&
+            dataActivityTypes.getAllActivityTypes.map((activityType: any) => (
+              <Button
+                key={activityType.activityTypeId}
+                title={activityType.name}
+                onPress={() => setActivityTypeId(activityType.activityTypeId)}
+              />
+            ))}
           <Button
             title="Enregistrer"
             color="#003c49"
             tintColor="#fff"
             style={{ margin: 25, padding: 10 }}
-            loading={loadingMesage}
+            loading={loadingCreateActivity}
             loadingIndicatorPosition="overlay"
             onPress={() =>
               handleSubmit(
@@ -199,9 +211,16 @@ const CreateActivityScreen = ({ navigation }) => {
                 activityDate,
                 Number(carbonQuantity)
               )
+              // console.log(">>>>I wanna create >>>>",{
+              //   title: title,
+              //   description: description,
+              //   activityTypeId: activityTypeId,
+              //   activityDate: activityDate,
+              //   carbonQuantity: Number(carbonQuantity),
+              // })
             }
           />
-        </View>
+        </Stack>
       </ScrollView>
     </SafeAreaView>
   );
