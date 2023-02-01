@@ -16,7 +16,7 @@ export const GoodDealCardFeed = (props: any) => {
           {props.goodDeal.image ? (
             <Image style={styles.image} source={{uri: props.goodDeal.image }} />
           ) : (
-            <Image style={styles.image} source={default_image} />
+            <Image style={styles.defaultImage} source={default_image} />
           )}
         </View>
         <View style={{flex: 1, marginRight: 20}}>
@@ -77,6 +77,11 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     borderRadius: 5,
+  },
+  defaultImage:{
+    borderRadius: 5,
+    width: 80,
+    height: 80
   },
   title: {
     marginTop: 20,
