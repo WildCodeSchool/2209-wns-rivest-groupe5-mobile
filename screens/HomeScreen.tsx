@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from "react-native";
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = ({ navigation } : any) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
