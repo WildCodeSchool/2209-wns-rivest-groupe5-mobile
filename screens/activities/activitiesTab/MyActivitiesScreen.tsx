@@ -15,7 +15,7 @@ const MyActivitiesScreen = ({ navigation }) => {
     GET_MY_ACTIVITIES,
     { fetchPolicy: "no-cache" }
   );
-  const [acitivities, setActivities] = useState([]);
+  const [activities, setActivities] = useState([]);
   const isFocused = useIsFocused();
 
   useFocusEffect(
