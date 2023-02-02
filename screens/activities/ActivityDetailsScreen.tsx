@@ -1,10 +1,12 @@
 import { Text, StyleSheet } from "react-native";
+
 import React from "react";
 import { IActivity } from "../../interfaces/IActivity";
 import { ScrollView } from "react-native-gesture-handler";
 import { format } from "date-fns";
 
-const ActivityDetailsScreen = ({ route }) => {
+
+const ActivityDetailsScreen = ({ route, navigation } : any) => {
   const { activity }: { activity: IActivity } = route.params;
   return (
     <ScrollView style={styles.container}>

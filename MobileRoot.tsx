@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { HomeScreen } from "./screens/HomeScreen";
 import { LoginScreen } from "./screens/LoginScreen";
 import { RegisterScreen } from "./screens/RegisterScreen";
-import { GoodDealsScreen } from "./screens/GoodDealsScreen";
-import { GoodDealDetailScreen } from "./screens/GoodDealDetailScreen";
+import GoodDealsScreen from "./screens/gooddeals/GoodDealsScreen";
 import ActivitiesScreen from "./screens/activities/ActivitiesScreen";
 import { useRecoilState } from "recoil";
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,15 +14,12 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
+import { CreateGoodDealScreen } from "./screens/CreateGoodDealScreen";
 
 const Drawer = createDrawerNavigator();
 
-const MobileRoot = ({ resetClient }) => {
+const MobileRoot = ({ resetClient } : any) => {
   const [user, setUser] = useRecoilState(currentUserState);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   function CustomDrawerContent(props: any) {
     return (
@@ -55,32 +51,38 @@ const MobileRoot = ({ resetClient }) => {
           name="Accueil"
           component={HomeScreen}
           options={{
-            drawerItemStyle: { display: user === null ? "flex" : "none" },
+            drawerItemStyle: {display: user === null ? 'flex' : 'none'},
           }}
         />
         <Drawer.Screen
           name="Connexion"
           component={LoginScreen}
           options={{
-            drawerItemStyle: { display: user === null ? "flex" : "none" },
+            drawerItemStyle: {display: user === null ? 'flex' : 'none'},
           }}
         />
         <Drawer.Screen
           name="Inscription"
           component={RegisterScreen}
           options={{
-            drawerItemStyle: { display: user === null ? "flex" : "none" },
+            drawerItemStyle: {display: user === null ? 'flex' : 'none'},
           }}
         />
-        <Drawer.Screen name="Bons Plans" component={GoodDealsScreen} />
-        <Drawer.Screen name="GoodDealDetail" component={GoodDealDetailScreen} />
+        <Drawer.Screen
+          name="Bons plans"
+          component={GoodDealsScreen}
+        />
         <Drawer.Screen
           name="Activités"
           component={ActivitiesScreen}
           options={{
-            drawerItemStyle: { display: user !== null ? "flex" : "none" },
+            drawerItemStyle: {display: user !== null ? 'flex' : 'none'},
           }}
         />
+         <Drawer.Screen
+            name="CreateGoodDeal"
+            component={CreateGoodDealScreen}
+          />
       </Drawer.Navigator>
     </NavigationContainer>
   );

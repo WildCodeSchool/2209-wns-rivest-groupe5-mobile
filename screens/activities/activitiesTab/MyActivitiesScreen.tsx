@@ -8,6 +8,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { format } from "date-fns";
 
 import { ScrollView } from "react-native-gesture-handler";
+import { Button } from "@react-native-material/core";
 
 const MyActivitiesScreen = ({ navigation }) => {
   const [getMyActivities, { loading, error }] = useLazyQuery(
@@ -20,7 +21,6 @@ const MyActivitiesScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       async function fetchActivities() {
-        // TODO : au logout si retour sur la page, arrive quand même à fetch les data
         try {
           const data = await getMyActivities();
           setActivities(data.data.getAllMyActivities.reverse());
@@ -38,24 +38,38 @@ const MyActivitiesScreen = ({ navigation }) => {
 
   if (loading) {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={styles.container}>
+        <Text style={styles.centerTitle}>Chargement...</Text>
       </View>
     );
   }
 
   if (error) {
     return (
-      <View>
-        <Text>An error occured : {error.message}</Text>
+      <View style={styles.container}>
+        <Text style={styles.centerTitle}>
+          Une erreur est survenue : {error.message}
+        </Text>
       </View>
     );
   }
 
   return (
     <ScrollView>
-      {acitivities &&
-        acitivities.map((activity: IActivity) => {
+      {activities && activities.length === 0 ? (
+        <View style={styles.container}>
+          <Text style={styles.centerTitle}>Aucune activité enregistrée</Text>
+          <Button
+            title="Ajouter une activité"
+            color="#17b2aa"
+            tintColor="#fff"
+            onPress={() => {
+              navigation.navigate("Créer Activité");
+            }}
+          />
+        </View>
+      ) : (
+        activities.map((activity: IActivity) => {
           return (
             <Pressable
               key={activity.activityId}
@@ -79,12 +93,23 @@ const MyActivitiesScreen = ({ navigation }) => {
               </View>
             </Pressable>
           );
-        })}
+        })
+      )}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+    marginHorizontal: 30,
+  },
+  centerTitle: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
   card: {
     borderRadius: 5,
     padding: 15,

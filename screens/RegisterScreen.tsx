@@ -63,7 +63,7 @@ export const RegisterScreen = ({ navigation }) => {
         setEmail("");
         setPassword("");
         setConfirmPassword("");
-        navigation.navigate("Login");
+        navigation.navigate("Connexion");
       },
       onError(error) {
         alert("Registration failed");

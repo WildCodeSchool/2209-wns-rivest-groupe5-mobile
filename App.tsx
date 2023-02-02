@@ -7,9 +7,24 @@ import {
 import * as SecureStore from "expo-secure-store";
 import { setContext } from "@apollo/client/link/context";
 import Constants from "expo-constants";
-import { DefaultTheme } from "@react-navigation/native";
 import { RecoilRoot } from "recoil";
 import MobileRoot from "./MobileRoot";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
+import { StyleSheet } from "react-native";
+import { HomeScreen } from "./screens/HomeScreen";
+import { LoginScreen } from "./screens/LoginScreen";
+import { RegisterScreen } from "./screens/RegisterScreen";
+import { GoodDealsScreen } from "./screens/GoodDealsScreen";
+import { GoodDealDetailScreen } from "./screens/GoodDealDetailScreen";
+import ActivitiesScreen from "./screens/activities/ActivitiesScreen";
+import { CreateGoodDealScreen } from "./screens/CreateGoodDealScreen";
+import { UploadPictureInput } from "./components/UploadPictureInput";
 
 const MyTheme = {
   ...DefaultTheme,
