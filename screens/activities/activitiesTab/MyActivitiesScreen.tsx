@@ -5,11 +5,15 @@ import { GET_MY_ACTIVITIES } from "../../../graphql/queries/activities/getMyActi
 import { IActivity } from "../../../interfaces/IActivity";
 import { useFocusEffect } from "@react-navigation/native";
 import { useIsFocused } from "@react-navigation/native";
-import { formatDateToDDMMYY } from "../../../helpers/formatter";
+import { format } from "date-fns";
+
 import { ScrollView } from "react-native-gesture-handler";
 
 const MyActivitiesScreen = ({ navigation }) => {
-  const [getMyActivities, { loading, error }] = useLazyQuery(GET_MY_ACTIVITIES);
+  const [getMyActivities, { loading, error }] = useLazyQuery(
+    GET_MY_ACTIVITIES,
+    { fetchPolicy: "no-cache" }
+  );
   const [acitivities, setActivities] = useState([]);
   const isFocused = useIsFocused();
 
@@ -19,7 +23,7 @@ const MyActivitiesScreen = ({ navigation }) => {
         // TODO : au logout si retour sur la page, arrive quand même à fetch les data
         try {
           const data = await getMyActivities();
-          setActivities(data.data.getAllMyActivities);
+          setActivities(data.data.getAllMyActivities.reverse());
         } catch (error) {
           console.log(
             "🚀 ~ file: MyActivitiesScreen.tsx:21 ~ fetchActivities ~ error",
@@ -66,10 +70,11 @@ const MyActivitiesScreen = ({ navigation }) => {
               <Text style={styles.type}>{activity.activityType.name}</Text>
               <View style={styles.bottom}>
                 <Text style={styles.carbon}>
-                  {activity.carbonQuantity} kg de CO2
+                  {parseFloat((activity.carbonQuantity / 1000).toFixed(2))} kg
+                  de CO2
                 </Text>
                 <Text style={styles.date}>
-                  {formatDateToDDMMYY(activity.activityDate)}
+                  {format(new Date(activity.activityDate), "dd/MM/yyyy")}
                 </Text>
               </View>
             </Pressable>

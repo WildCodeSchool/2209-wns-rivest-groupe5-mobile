@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
-
+import { useMutation, useQuery } from "@apollo/client";
 import {
   Stack,
   Button,
@@ -14,48 +13,31 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { GET_ACTIVITY_TYPES } from "../../../graphql/queries/activities/getActivityTypesQuery";
 import { CREATE_ACTIVITY } from "../../../graphql/queries/activities/createActivityMutation";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { format } from "date-fns";
 
 const CreateActivityScreen = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [activityTypeId, setActivityTypeId] = useState(1);
+  const [carbonQuantityUnit, setCarbonQuantityUnit] = useState("gramme");
   const [carbonQuantity, setCarbonQuantity] = useState("");
   const [datePicker, setDatePicker] = useState(false);
   const [activityDate, setActivityDate] = useState(new Date());
-  const [createActivity, { loading: loadingMesage }] =
-    useMutation(CREATE_ACTIVITY);
+
   const {
     data: dataActivityTypes,
     loading: loadingActivityTypes,
     error: errorActivityTypes,
   } = useQuery(GET_ACTIVITY_TYPES);
-  console.log("------ liste type activities", dataActivityTypes);
 
-  //{"getAllActivityTypes": [{"__typename": "ActivityType", "activityTypeId": 1, "name": "Transport"}, {"__typename": "ActivityType", "activityTypeId": 2, "name": "Agriculture"}, {"__typename": "ActivityType", "activityTypeId": 3, "name": "Autre"}]}
+  const [
+    createActivity,
+    { loading: loadingCreateActivity, error: errorCreateActivity },
+  ] = useMutation(CREATE_ACTIVITY);
 
-  // const isFocused = useIsFocused();
-
-  if (loadingActivityTypes) return "Loading activity types...";
-  if (errorActivityTypes) return ` Error! ${errorActivityTypes.message}`;
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     async function fetchActivityTypes() {
-  //       try {
-  //         const data = await getActivityTypes();
-  //         setActivityTypeId(data.activityTypeId);
-  //       } catch (error) {
-  //         console.log(
-  //           "🚀 ~ file: CreateActivityScreen.tsx ~ fetchActivityTypes ~ error",
-  //           error
-  //         );
-  //         setActivityTypeId(Number);
-  //       }
-  //     }
-  //     fetchActivityTypes();
-  //   }, [isFocused])
-  // );
+  if (loadingActivityTypes) return <Text>"Loading..."</Text>;
+  if (errorActivityTypes)
+    return <Text>` Error! ${errorActivityTypes.message}`</Text>;
 
   const showDatePicker = () => {
     setDatePicker(true);
@@ -90,9 +72,11 @@ const CreateActivityScreen = ({ navigation }) => {
         setActivityTypeId(1);
         setCarbonQuantity("");
         setActivityDate(new Date());
-        navigation.navigate("Activités");
+        navigation.navigate("Mes Activités");
       },
       onError(error) {
+        console.log("error", error);
+
         alert("Activity creation failed");
       },
     });
@@ -101,20 +85,21 @@ const CreateActivityScreen = ({ navigation }) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={{ paddingTop: 50 }}>
+        <View style={{ paddingTop: 30 }}>
           <Text
             style={{
               fontWeight: "bold",
               textAlign: "center",
               fontSize: 40,
-              marginBottom: 10,
+              marginBottom: 20,
             }}
           >
             Enregistrer une activité carbone
           </Text>
+
           <Stack spacing={20} style={{ marginLeft: 25, marginRight: 25 }}>
             <TextInput
-              label="Titre"
+              placeholder="Titre de l'activité"
               value={title}
               autoCapitalize="none"
               variant="outlined"
@@ -122,19 +107,76 @@ const CreateActivityScreen = ({ navigation }) => {
               onChangeText={(text) => setTitle(text)}
             />
             <TextInput
-              label="Description"
+              placeholder="Description de l'activité"
               value={description}
               autoCapitalize="none"
               variant="outlined"
               color="grey"
               onChangeText={(text) => setDescription(text)}
             />
-
-            {/* <TextInput
-              label="Date"
+            <View
+              style={{
+                backgroundColor: "#fff",
+                borderColor: "grey",
+                borderStyle: "solid",
+                borderWidth: 1,
+              }}
+            >
+              <Text style={{ paddingLeft: 8, paddingTop: 5, color: "grey" }}>
+                Catégorie
+              </Text>
+              <Picker
+                selectedValue={activityTypeId}
+                style={{ margin: 0 }}
+                onValueChange={(itemValue) => setActivityTypeId(itemValue)}
+                mode="dropdown"
+              >
+                {dataActivityTypes &&
+                  dataActivityTypes.getAllActivityTypes.map(
+                    (activityType: any) => (
+                      <Picker.Item
+                        key={activityType.activityTypeId}
+                        label={activityType.name}
+                        value={activityType.activityTypeId}
+                      />
+                    )
+                  )}
+              </Picker>
+            </View>
+            <View
+              style={{
+                backgroundColor: "#fff",
+                borderColor: "grey",
+                borderStyle: "solid",
+                borderWidth: 1,
+              }}
+            >
+              <Text style={{ paddingLeft: 8, paddingTop: 5, color: "grey" }}>
+                Unité de mesure
+              </Text>
+              <Picker
+                selectedValue={carbonQuantityUnit}
+                style={{ margin: 0 }}
+                onValueChange={(itemValue) => setCarbonQuantityUnit(itemValue)}
+                mode="dropdown"
+              >
+                <Picker.Item label="gramme" value="gramme" />
+                <Picker.Item label="kilogramme" value="kilogramme" />
+              </Picker>
+            </View>
+            <TextInput
+              placeholder="Quantité de carbone"
+              value={carbonQuantity}
               variant="outlined"
-              value={activityDate.toLocaleDateString("fr")}
-              onFocus={showDatePicker}
+              keyboardType={"numeric"}
+              onChangeText={(text) => setCarbonQuantity(text)}
+            />
+
+            <TextInput
+              label="Date de l'activité"
+              variant="outlined"
+              value={format(new Date(activityDate), "dd/MM/yyyy")}
+              editable={false}
               trailing={(props) => (
                 <IconButton
                   icon={(props) => (
@@ -142,7 +184,7 @@ const CreateActivityScreen = ({ navigation }) => {
                   )}
                 />
               )}
-            /> */}
+            />
 
             {datePicker && (
               <DateTimePicker
@@ -153,35 +195,14 @@ const CreateActivityScreen = ({ navigation }) => {
               />
             )}
 
-            <Picker
-              selectedValue={activityTypeId}
-              style={{ height: 50, width: 150 }}
-              onValueChange={(itemValue, itemIndex) =>
-                setActivityTypeId(itemValue)
-              }
-            >
-              {dataActivityTypes &&
-                dataActivityTypes.getAllActivityTypes.map(
-                  (activityType: any) => (
-                    <Picker.Item
-                      label={activityType.name}
-                      value={activityType.activityTypeId}
-                      key={activityType.activityTypeId}
-                    />
-                  )
-                )}
-
-              {/* <Picker.Item label="Transport" value={1} />
-              <Picker.Item label="Agriculture" value={2} /> */}
-            </Picker>
-
-            {/* <TextInput
-              label="Quantité de carbone"
-              value={carbonQuantity}
-              variant="outlined"
-              keyboardType={"numeric"}
-              onChangeText={(text) => setCarbonQuantity(text)}
-            ></TextInput> */}
+            {datePicker && (
+              <DateTimePicker
+                value={activityDate}
+                mode={"date"}
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={onDateSelected}
+              />
+            )}
           </Stack>
 
           <Button
@@ -189,17 +210,34 @@ const CreateActivityScreen = ({ navigation }) => {
             color="#003c49"
             tintColor="#fff"
             style={{ margin: 25, padding: 10 }}
-            loading={loadingMesage}
+            loading={loadingCreateActivity}
             loadingIndicatorPosition="overlay"
-            onPress={() =>
-              handleSubmit(
-                title,
-                description,
-                activityTypeId,
-                activityDate,
-                Number(carbonQuantity)
-              )
-            }
+            onPress={() => {
+              if (carbonQuantity === "0" || carbonQuantity.includes(",")) {
+                alert(
+                  "Quantity has to be greater than 0 and for decimals use '.'"
+                );
+              } else if (
+                title.trim() === "" ||
+                description.trim() === "" ||
+                carbonQuantity.toString().trim() === ""
+              ) {
+                alert("Complete all fields, please");
+              } else {
+                let carbonToSend =
+                  carbonQuantityUnit === "kilogramme"
+                    ? Number(carbonQuantity) * 1000
+                    : carbonQuantity;
+
+                handleSubmit(
+                  title,
+                  description,
+                  activityTypeId,
+                  activityDate,
+                  Number(carbonToSend)
+                );
+              }
+            }}
           />
         </View>
       </ScrollView>
