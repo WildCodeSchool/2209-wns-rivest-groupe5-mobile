@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { GoodDealCardFeed } from "../../../components/GoodDealCardFeed";
 import { GoodDealCardFeedPrimary } from "../../../components/GoodDealCardFeedPrimary";
-import { GET_ALL_MY_GOOD_DEALS } from "../../../graphql/queries/activities/goodDeals/getMyGoodDeals";
+import { GET_ALL_MY_GOOD_DEALS } from "../../../graphql/queries/goodDeals/getMyGoodDeals";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { IGoodDeal } from "../../../interfaces/IGoodDeal";
 import { Button } from "@react-native-material/core";

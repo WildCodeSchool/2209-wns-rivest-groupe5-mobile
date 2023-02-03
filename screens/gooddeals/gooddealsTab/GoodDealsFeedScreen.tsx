@@ -6,7 +6,7 @@ import { useLazyQuery } from "@apollo/client";
 import { IGoodDeal } from "../../../interfaces/IGoodDeal";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { GET_ALL_GOOD_DEALS } from "../../../graphql/queries/activities/goodDeals/dist/getAllGoodDeals";
+import { GET_ALL_GOOD_DEALS } from "../../../graphql/queries/goodDeals/getAllGoodDeals";
 
 const GoodDealsFeedScreen = ({ navigation }: any) => {
   const [getAllGoodDeals, { loading, error }] = useLazyQuery(

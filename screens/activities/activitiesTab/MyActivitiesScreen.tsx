@@ -75,13 +75,13 @@ const MyActivitiesScreen = ({ navigation }) => {
               key={activity.activityId}
               style={styles.card}
               onPress={() => {
-                navigation.navigate("ActivityDetails", {
+                navigation.navigate("Détails Activité", {
                   activity: activity,
                 });
               }}
             >
               <Text style={styles.title}>{activity.title}</Text>
-              <Text style={styles.type}>{activity.activityType.name}</Text>
+              <Text style={styles.type}>{activity.activityType.label}</Text>
               <View style={styles.bottom}>
                 <Text style={styles.carbon}>
                   {parseFloat((activity.carbonQuantity / 1000).toFixed(2))} kg

@@ -9,8 +9,11 @@ export const GET_MY_ACTIVITIES = gql`
       description
       carbonQuantity
       activityType {
-        name
         activityTypeId
+        backgroundColor
+        emoji
+        label
+        name
       }
     }
   }

@@ -1,7 +1,7 @@
-import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import GoodDealsTab from './gooddealsTab/GoodDealsTab'
-import GoodDealsDetailsScreen from './GoodDealsDetailsScreen'
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import GoodDealsTab from "./goodDealsTab/GoodDealsTab";
+import GoodDealsDetailsScreen from "./GoodDealsDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -11,9 +11,12 @@ const GoodDealsScreen = () => {
       <Stack.Screen
         name="GoodDealsTab"
         component={GoodDealsTab}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
-      <Stack.Screen name="GoodDealsDetails" component={GoodDealsDetailsScreen} />
+      <Stack.Screen
+        name="Détails Bon Plan"
+        component={GoodDealsDetailsScreen}
+      />
     </Stack.Navigator>
   );
 };

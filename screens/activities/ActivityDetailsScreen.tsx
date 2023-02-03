@@ -5,13 +5,12 @@ import { IActivity } from "../../interfaces/IActivity";
 import { ScrollView } from "react-native-gesture-handler";
 import { format } from "date-fns";
 
-
-const ActivityDetailsScreen = ({ route, navigation } : any) => {
+const ActivityDetailsScreen = ({ route, navigation }: any) => {
   const { activity }: { activity: IActivity } = route.params;
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>{activity.title}</Text>
-      <Text style={styles.type}>{activity.activityType.name}</Text>
+      <Text style={styles.type}>{activity.activityType.label}</Text>
       <Text style={styles.date}>
         Activité effectuée le{" "}
         {format(new Date(activity.activityDate), "dd/MM/yyyy")}

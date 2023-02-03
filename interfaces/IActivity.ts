@@ -6,6 +6,10 @@ export interface IActivity {
   description?: string;
   createdAt: Date;
   activityType: {
+    activityTypeId: number;
     name: string;
+    label: string;
+    emoji?: string;
+    backgroundColor: string;
   };
 }

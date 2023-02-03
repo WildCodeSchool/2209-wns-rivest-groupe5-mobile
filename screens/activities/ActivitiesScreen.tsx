@@ -13,7 +13,7 @@ const ActivitiesScreen = () => {
         component={ActivitiesTab}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="ActivityDetails" component={ActivityDetailsScreen} />
+      <Stack.Screen name="Détails Activité" component={ActivityDetailsScreen} />
     </Stack.Navigator>
   );
 };

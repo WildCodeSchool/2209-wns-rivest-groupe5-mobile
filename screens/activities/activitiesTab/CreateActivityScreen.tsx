@@ -136,7 +136,7 @@ const CreateActivityScreen = ({ navigation }) => {
                     (activityType: any) => (
                       <Picker.Item
                         key={activityType.activityTypeId}
-                        label={activityType.name}
+                        label={activityType.label}
                         value={activityType.activityTypeId}
                       />
                     )
