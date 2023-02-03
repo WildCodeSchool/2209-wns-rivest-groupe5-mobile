@@ -1,32 +1,46 @@
-import {View, Text, SafeAreaView, FlatList} from 'react-native';
-import React from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { GoodDealCardFeed } from '../../../components/GoodDealCardFeed';
-import { GoodDealCardFeedPrimary } from '../../../components/GoodDealCardFeedPrimary';
+import { Text, SafeAreaView, FlatList, View, StyleSheet } from "react-native";
+import React, { useCallback, useState } from "react";
+import { useLazyQuery } from "@apollo/client";
+import { GoodDealCardFeed } from "../../../components/GoodDealCardFeed";
+import { GoodDealCardFeedPrimary } from "../../../components/GoodDealCardFeedPrimary";
+import { GET_ALL_MY_GOOD_DEALS } from "../../../graphql/queries/activities/goodDeals/getMyGoodDeals";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { IGoodDeal } from "../../../interfaces/IGoodDeal";
+import { Button } from "@react-native-material/core";
 
-const GET_ALL_MY_GOOD_DEALS = gql`
-  query getAllMyGoodDeals {
-    getAllMyGoodDeals {
-      goodDealId
-      goodDealTitle
-      goodDealLink
-      goodDealContent
-      image
-      createdAt
-      user {
-        email
-        firstname
-        lastname
-        avatar
-        userId
+const MyGoodDealsScreen = ({ navigation }: any) => {
+  const [getMyGoodDeals, { loading, error }] = useLazyQuery(
+    GET_ALL_MY_GOOD_DEALS,
+    { fetchPolicy: "no-cache" }
+  );
+
+  const [goodDeals, setGoodDeals] = useState<IGoodDeal[]>([]);
+  const isFocused = useIsFocused();
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchGoodDeals() {
+        try {
+          const data = await getMyGoodDeals();
+
+          const dataGoodDeals = [...data.data.getAllMyGoodDeals];
+          const orderData = dataGoodDeals.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+
+          setGoodDeals(orderData);
+        } catch (error) {
+          console.log(
+            "🚀 ~ file: MyGoodDealsScreen fetchGoodDeals~ error",
+            error
+          );
+          setGoodDeals([]);
+        }
       }
-    }
-  }
-`;
-
-const MyGoodDealsScreen = ({navigation} : any) => {
-
-  const {loading, error, data} = useQuery(GET_ALL_MY_GOOD_DEALS);
+      fetchGoodDeals();
+    }, [isFocused])
+  );
 
   if (loading) {
     return <Text>Loading</Text>;
@@ -37,21 +51,48 @@ const MyGoodDealsScreen = ({navigation} : any) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <GoodDealCardFeedPrimary />
-      <FlatList
-        data={data.getAllMyGoodDeals}
-        renderItem={({item}) => (
-          <GoodDealCardFeed
-            key={item.goodDealId}
-            goodDeal={item}
-            navigation={navigation}
+      {goodDeals && goodDeals.length === 0 ? (
+        <View style={styles.container}>
+          <Text style={styles.centerTitle}>Aucun bon plan enregistré</Text>
+          <Button
+            title="Ajouter un bon plan"
+            color="#17b2aa"
+            tintColor="#fff"
+            onPress={() => {
+              navigation.navigate("Créer un bon plan");
+            }}
           />
-        )}
-        keyExtractor={(item) => item.goodDealId}
-      />
+        </View>
+      ) : (
+        <FlatList
+          data={goodDeals}
+          renderItem={({ item }) => (
+            <GoodDealCardFeed
+              key={item.goodDealId}
+              goodDeal={item}
+              navigation={navigation}
+            />
+          )}
+          keyExtractor={(item) => item.goodDealId.toString()}
+        />
+      )}
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+    marginHorizontal: 30,
+  },
+  centerTitle: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+});
 
 export default MyGoodDealsScreen;

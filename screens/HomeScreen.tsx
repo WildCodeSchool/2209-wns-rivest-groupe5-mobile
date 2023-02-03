@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from "react-native";
 
-export const HomeScreen = ({ navigation } : any) => {
+export const HomeScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -33,7 +33,7 @@ export const HomeScreen = ({ navigation } : any) => {
           tintColor="#fff"
           style={{ margin: 10 }}
           onPress={() => {
-            navigation.navigate("Register");
+            navigation.navigate("Inscription");
           }}
         />
         <Button
@@ -42,7 +42,7 @@ export const HomeScreen = ({ navigation } : any) => {
           tintColor="#fff"
           style={{ margin: 10 }}
           onPress={() => {
-            navigation.navigate("Login");
+            navigation.navigate("Connexion");
           }}
         />
         <View
