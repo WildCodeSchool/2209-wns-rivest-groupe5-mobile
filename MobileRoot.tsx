@@ -14,11 +14,10 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
-import { CreateGoodDealScreen } from "./screens/CreateGoodDealScreen";
 
 const Drawer = createDrawerNavigator();
 
-const MobileRoot = ({ resetClient } : any) => {
+const MobileRoot = ({ resetClient }: any) => {
   const [user, setUser] = useRecoilState(currentUserState);
 
   function CustomDrawerContent(props: any) {
@@ -39,8 +38,6 @@ const MobileRoot = ({ resetClient } : any) => {
     await resetClient();
   };
 
-  // TODO : remplacer GoodDeals et GoodDealDetails par un GoodDealScreen sur le modèle des activités, et dans ce fichier inclure les 2 routes
-
   return (
     <NavigationContainer>
       <Drawer.Navigator
@@ -51,38 +48,31 @@ const MobileRoot = ({ resetClient } : any) => {
           name="Accueil"
           component={HomeScreen}
           options={{
-            drawerItemStyle: {display: user === null ? 'flex' : 'none'},
+            drawerItemStyle: { display: user === null ? "flex" : "none" },
           }}
         />
         <Drawer.Screen
           name="Connexion"
           component={LoginScreen}
           options={{
-            drawerItemStyle: {display: user === null ? 'flex' : 'none'},
+            drawerItemStyle: { display: user === null ? "flex" : "none" },
           }}
         />
         <Drawer.Screen
           name="Inscription"
           component={RegisterScreen}
           options={{
-            drawerItemStyle: {display: user === null ? 'flex' : 'none'},
+            drawerItemStyle: { display: user === null ? "flex" : "none" },
           }}
         />
-        <Drawer.Screen
-          name="Bons plans"
-          component={GoodDealsScreen}
-        />
+        <Drawer.Screen name="Bons plans" component={GoodDealsScreen} />
         <Drawer.Screen
           name="Activités"
           component={ActivitiesScreen}
           options={{
-            drawerItemStyle: {display: user !== null ? 'flex' : 'none'},
+            drawerItemStyle: { display: user !== null ? "flex" : "none" },
           }}
         />
-         <Drawer.Screen
-            name="CreateGoodDeal"
-            component={CreateGoodDealScreen}
-          />
       </Drawer.Navigator>
     </NavigationContainer>
   );
