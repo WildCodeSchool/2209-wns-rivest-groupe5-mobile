@@ -1,15 +1,15 @@
-import { gql, useMutation } from "@apollo/client";
-import { Stack, Button, TextInput } from "@react-native-material/core";
-import { useState } from "react";
+import { gql, useMutation } from '@apollo/client'
+import { Stack, Button, TextInput } from '@react-native-material/core'
+import { useState } from 'react'
 import {
   SafeAreaView,
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
-} from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { useTheme, Link } from "@react-navigation/native";
+} from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useTheme, Link } from '@react-navigation/native'
 
 const CREATE_USER = gql`
   mutation CreateUser(
@@ -30,15 +30,15 @@ const CREATE_USER = gql`
       email
     }
   }
-`;
+`
 
 export const RegisterScreen = ({ navigation }) => {
-  const [createUser, { loading, error }] = useMutation(CREATE_USER);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [createUser, { loading, error }] = useMutation(CREATE_USER)
+  const [firstname, setFirstname] = useState('')
+  const [lastname, setLastname] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   function handleSubmit(
     firstname: string,
@@ -47,7 +47,7 @@ export const RegisterScreen = ({ navigation }) => {
     password: string
   ) {
     if (password !== confirmPassword) {
-      return alert("Mots de passe différents");
+      return alert('Mots de passe différents')
     }
     createUser({
       variables: {
@@ -57,18 +57,18 @@ export const RegisterScreen = ({ navigation }) => {
         password: password,
       },
       onCompleted(data) {
-        alert("Account created with success");
-        setFirstname("");
-        setLastname("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-        navigation.navigate("Connexion");
+        alert('Account created with success')
+        setFirstname('')
+        setLastname('')
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        navigation.navigate('Connexion')
       },
       onError(error) {
-        alert("Registration failed");
+        alert('Registration failed')
       },
-    });
+    })
   }
 
   return (
@@ -77,8 +77,8 @@ export const RegisterScreen = ({ navigation }) => {
         <View style={{ paddingTop: 50 }}>
           <Text
             style={{
-              fontWeight: "bold",
-              textAlign: "center",
+              fontWeight: 'bold',
+              textAlign: 'center',
               fontSize: 40,
               marginBottom: 10,
             }}
@@ -139,21 +139,21 @@ export const RegisterScreen = ({ navigation }) => {
             loadingIndicatorPosition="overlay"
             onPress={() => handleSubmit(firstname, lastname, email, password)}
           />
-          <Text style={{ textAlign: "center", marginTop: 20 }}>
-            Déjà membre?{" "}
-            <Link style={{ color: "#2ECE65" }} to={{ screen: "Login" }}>
+          <Text style={{ textAlign: 'center', marginTop: 20 }}>
+            Déjà membre?{' '}
+            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Login' }}>
               Connecte-toi
             </Link>
           </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     height: 50,
     margin: 12,
     marginLeft: 25,
@@ -162,15 +162,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   button: {
-    backgroundColor: "#2ECE65",
+    backgroundColor: '#2ECE65',
     borderRadius: 10,
     height: 50,
     marginTop: 50,
     marginLeft: 100,
     marginRight: 100,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontWeight: "bold",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: 'bold',
   },
-});
+})

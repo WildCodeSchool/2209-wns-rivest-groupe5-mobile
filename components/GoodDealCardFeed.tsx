@@ -1,13 +1,13 @@
-import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 
 export const GoodDealCardFeed = (props: any) => {
   const onPress = () => {
-    props.navigation.navigate("Détails Bon Plan", {
+    props.navigation.navigate('Détails Bon Plan', {
       goodDeal: props.goodDeal,
-    });
-  };
+    })
+  }
 
-  const default_image = require("../assets/default-placeholder.png");
+  const default_image = require('../assets/default-placeholder.png')
 
   return (
     <View style={styles.container}>
@@ -40,32 +40,32 @@ export const GoodDealCardFeed = (props: any) => {
         </TouchableOpacity>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: "center",
-    backgroundColor: "#17b2aa",
+    alignItems: 'center',
+    backgroundColor: '#17b2aa',
     padding: 10,
     marginLeft: 50,
     borderRadius: 5,
   },
   container: {
-    backgroundColor: "#DDDDDD",
+    backgroundColor: '#DDDDDD',
     marginRight: 30,
     marginLeft: 30,
     borderRadius: 5,
-    height: "100%",
+    height: '100%',
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-end",
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
     marginTop: 20,
   },
   top: {
     height: 100,
-    flexDirection: "row",
-    alignContent: "center",
+    flexDirection: 'row',
+    alignContent: 'center',
     borderRadius: 5,
   },
   footer: {
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingBottom: 10,
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   image: {
     flex: 1,
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 20,
     fontSize: 20,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   content: {
     marginTop: 5,
   },
-});
+})

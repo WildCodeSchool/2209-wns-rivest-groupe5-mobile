@@ -1,47 +1,47 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import React, { useState } from "react";
-import { useLazyQuery } from "@apollo/client";
-import { GET_MY_ACTIVITIES } from "../../../graphql/queries/activities/getMyActivitiesQuery";
-import { IActivity } from "../../../interfaces/IActivity";
-import { useFocusEffect } from "@react-navigation/native";
-import { useIsFocused } from "@react-navigation/native";
-import { format } from "date-fns";
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+import React, { useState } from 'react'
+import { useLazyQuery } from '@apollo/client'
+import { GET_MY_ACTIVITIES } from '../../../graphql/queries/activities/getMyActivitiesQuery'
+import { IActivity } from '../../../interfaces/IActivity'
+import { useFocusEffect } from '@react-navigation/native'
+import { useIsFocused } from '@react-navigation/native'
+import { format } from 'date-fns'
 
-import { ScrollView } from "react-native-gesture-handler";
-import { Button } from "@react-native-material/core";
+import { ScrollView } from 'react-native-gesture-handler'
+import { Button } from '@react-native-material/core'
 
 const MyActivitiesScreen = ({ navigation }) => {
   const [getMyActivities, { loading, error }] = useLazyQuery(
     GET_MY_ACTIVITIES,
-    { fetchPolicy: "no-cache" }
-  );
-  const [activities, setActivities] = useState([]);
-  const isFocused = useIsFocused();
+    { fetchPolicy: 'no-cache' }
+  )
+  const [activities, setActivities] = useState([])
+  const isFocused = useIsFocused()
 
   useFocusEffect(
     React.useCallback(() => {
       async function fetchActivities() {
         try {
-          const data = await getMyActivities();
-          setActivities(data.data.getAllMyActivities.reverse());
+          const data = await getMyActivities()
+          setActivities(data.data.getAllMyActivities.reverse())
         } catch (error) {
           console.log(
-            "🚀 ~ file: MyActivitiesScreen.tsx:21 ~ fetchActivities ~ error",
+            '🚀 ~ file: MyActivitiesScreen.tsx:21 ~ fetchActivities ~ error',
             error
-          );
-          setActivities([]);
+          )
+          setActivities([])
         }
       }
-      fetchActivities();
+      fetchActivities()
     }, [isFocused])
-  );
+  )
 
   if (loading) {
     return (
       <View style={styles.container}>
         <Text style={styles.centerTitle}>Chargement...</Text>
       </View>
-    );
+    )
   }
 
   if (error) {
@@ -51,7 +51,7 @@ const MyActivitiesScreen = ({ navigation }) => {
           Une erreur est survenue : {error.message}
         </Text>
       </View>
-    );
+    )
   }
 
   return (
@@ -64,7 +64,7 @@ const MyActivitiesScreen = ({ navigation }) => {
             color="#17b2aa"
             tintColor="#fff"
             onPress={() => {
-              navigation.navigate("Créer Activité");
+              navigation.navigate('Créer Activité')
             }}
           />
         </View>
@@ -75,9 +75,9 @@ const MyActivitiesScreen = ({ navigation }) => {
               key={activity.activityId}
               style={styles.card}
               onPress={() => {
-                navigation.navigate("Détails Activité", {
+                navigation.navigate('Détails Activité', {
                   activity: activity,
-                });
+                })
               }}
             >
               <Text style={styles.title}>{activity.title}</Text>
@@ -88,16 +88,16 @@ const MyActivitiesScreen = ({ navigation }) => {
                   de CO2
                 </Text>
                 <Text style={styles.date}>
-                  {format(new Date(activity.activityDate), "dd/MM/yyyy")}
+                  {format(new Date(activity.activityDate), 'dd/MM/yyyy')}
                 </Text>
               </View>
             </Pressable>
-          );
+          )
         })
       )}
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -105,17 +105,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   centerTitle: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   card: {
     borderRadius: 5,
     padding: 15,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     margin: 5,
-    shadowColor: "rgba(50,50,50,0.6)",
+    shadowColor: 'rgba(50,50,50,0.6)',
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
@@ -123,22 +123,22 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   type: {
-    fontStyle: "italic",
-    color: "#888",
+    fontStyle: 'italic',
+    color: '#888',
     marginBottom: 15,
   },
   bottom: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingTop: 5,
     borderTopWidth: 1,
-    borderTopColor: "#eee",
+    borderTopColor: '#eee',
   },
   carbon: { fontSize: 12 },
   date: { fontSize: 12 },
-});
+})
 
-export default MyActivitiesScreen;
+export default MyActivitiesScreen

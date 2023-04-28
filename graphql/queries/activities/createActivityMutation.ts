@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const CREATE_ACTIVITY = gql`
   mutation CreateActivity($data: CreateActivityInput!) {
@@ -14,4 +14,4 @@ export const CREATE_ACTIVITY = gql`
       activityId
     }
   }
-`;
+`

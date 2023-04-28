@@ -1,11 +1,11 @@
-import * as SecureStore from "expo-secure-store";
-import { gql, useLazyQuery } from "@apollo/client";
-import { SafeAreaView, ScrollView, Text, View, StyleSheet } from "react-native";
-import { Stack, TextInput, Button } from "@react-native-material/core";
-import { useTheme, Link } from "@react-navigation/native";
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { currentUserState } from "../atom/currentUserAtom";
+import * as SecureStore from 'expo-secure-store'
+import { gql, useLazyQuery } from '@apollo/client'
+import { SafeAreaView, ScrollView, Text, View, StyleSheet } from 'react-native'
+import { Stack, TextInput, Button } from '@react-native-material/core'
+import { useTheme, Link } from '@react-navigation/native'
+import { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { currentUserState } from '../atom/currentUserAtom'
 
 const GET_TOKEN_LOGIN = gql`
   query GetToken($email: String!, $password: String!) {
@@ -19,18 +19,18 @@ const GET_TOKEN_LOGIN = gql`
       }
     }
   }
-`;
+`
 
 async function saveTokenInSecureStore(key: string, value: string) {
-  await SecureStore.setItemAsync(key, value);
+  await SecureStore.setItemAsync(key, value)
 }
 
 export const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { colors } = useTheme();
-  const [getToken, { loading, error }] = useLazyQuery(GET_TOKEN_LOGIN);
-  const [user, setUser] = useRecoilState(currentUserState);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { colors } = useTheme()
+  const [getToken, { loading, error }] = useLazyQuery(GET_TOKEN_LOGIN)
+  const [user, setUser] = useRecoilState(currentUserState)
 
   return (
     <SafeAreaView>
@@ -38,8 +38,8 @@ export const LoginScreen = ({ navigation }) => {
         <View style={{ paddingTop: 50 }}>
           <Text
             style={{
-              fontWeight: "bold",
-              textAlign: "center",
+              fontWeight: 'bold',
+              textAlign: 'center',
               fontSize: 40,
               marginBottom: 40,
             }}
@@ -50,7 +50,7 @@ export const LoginScreen = ({ navigation }) => {
             <TextInput
               label="Email"
               value={email}
-              autoCapitalize={"none"}
+              autoCapitalize={'none'}
               variant="outlined"
               color="grey"
               onChangeText={(value) => setEmail(value)}
@@ -59,7 +59,7 @@ export const LoginScreen = ({ navigation }) => {
               label="Mot de passe"
               value={password}
               secureTextEntry={true}
-              autoCapitalize={"none"}
+              autoCapitalize={'none'}
               variant="outlined"
               color="grey"
               onChangeText={(value) => setPassword(value)}
@@ -77,34 +77,34 @@ export const LoginScreen = ({ navigation }) => {
                 variables: { email, password },
                 onCompleted(data) {
                   //store token via secure store
-                  console.log(">>>>DATA FROM LOGIN >>>>", data);
-                  saveTokenInSecureStore("token", data.getToken.token);
-                  setUser(data.userFromDB);
-                  navigation.navigate("Activités", {
-                    screen: "ActivitiesTab",
+                  console.log('>>>>DATA FROM LOGIN >>>>', data)
+                  saveTokenInSecureStore('token', data.getToken.token)
+                  setUser(data.userFromDB)
+                  navigation.navigate('Activités', {
+                    screen: 'ActivitiesTab',
                     params: {
-                      screen: "Mes Activités",
+                      screen: 'Mes Activités',
                     },
-                  });
+                  })
                 },
                 onError(error) {
-                  console.log(error);
-                  alert("Login failed");
+                  console.log(error)
+                  alert('Login failed')
                 },
-              });
+              })
             }}
           />
-          <Text style={{ textAlign: "center", marginTop: 20 }}>
-            Pas encore de compte?{" "}
-            <Link style={{ color: "#2ECE65" }} to={{ screen: "Register" }}>
+          <Text style={{ textAlign: 'center', marginTop: 20 }}>
+            Pas encore de compte?{' '}
+            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Register' }}>
               Rejoins nous
             </Link>
           </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   button: {
@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
     marginLeft: 100,
     marginRight: 100,
     marginBottom: 50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-});
+})

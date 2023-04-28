@@ -1,4 +1,4 @@
-import { Button, Text } from "@react-native-material/core";
+import { Button, Text } from '@react-native-material/core'
 import {
   Image,
   SafeAreaView,
@@ -6,7 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
-} from "react-native";
+} from 'react-native'
 
 export const HomeScreen = ({ navigation }: any) => {
   return (
@@ -14,7 +14,7 @@ export const HomeScreen = ({ navigation }: any) => {
       <ScrollView style={styles.scrollView}>
         <View style={styles.imageContainer}>
           <Image
-            source={require("../assets/wildcarbon_logo.png")}
+            source={require('../assets/wildcarbon_logo.png')}
             style={styles.logo}
           />
         </View>
@@ -33,7 +33,7 @@ export const HomeScreen = ({ navigation }: any) => {
           tintColor="#fff"
           style={{ margin: 10 }}
           onPress={() => {
-            navigation.navigate("Inscription");
+            navigation.navigate('Inscription')
           }}
         />
         <Button
@@ -42,12 +42,12 @@ export const HomeScreen = ({ navigation }: any) => {
           tintColor="#fff"
           style={{ margin: 10 }}
           onPress={() => {
-            navigation.navigate("Connexion");
+            navigation.navigate('Connexion')
           }}
         />
         <View
           style={{
-            backgroundColor: "#003c49",
+            backgroundColor: '#003c49',
             marginTop: 50,
             paddingTop: 25,
             paddingBottom: 25,
@@ -59,9 +59,9 @@ export const HomeScreen = ({ navigation }: any) => {
             Ici, les meilleurs bons plans !
           </Text>
           <View style={styles.imageContainer}>
-            <Image source={require("../assets/super_bons_plans.jpg")} />
+            <Image source={require('../assets/super_bons_plans.jpg')} />
           </View>
-          <Text variant="body1" style={{ color: "#fff", margin: 20 }}>
+          <Text variant="body1" style={{ color: '#fff', margin: 20 }}>
             Chaque jour des nouveaux bons plans carbone à découvrir !
           </Text>
           <Button
@@ -69,17 +69,17 @@ export const HomeScreen = ({ navigation }: any) => {
             color="#17b2aa"
             tintColor="#fff"
             onPress={() => {
-              navigation.navigate("GoodDeals");
+              navigation.navigate('GoodDeals')
             }}
           />
         </View>
-        <Text style={{ textAlign: "center", margin: 20 }}>
+        <Text style={{ textAlign: 'center', margin: 20 }}>
           WildCarbon © 2023
         </Text>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -90,27 +90,27 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   title: {
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     fontSize: 30,
 
     paddingBottom: 15,
   },
   whiteContrast: {
-    color: "#fff",
+    color: '#fff',
   },
   body: {
-    textAlign: "center",
+    textAlign: 'center',
     margin: 10,
   },
   imageContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logo: {
-    resizeMode: "contain",
+    resizeMode: 'contain',
     flex: 0.8,
     aspectRatio: 2.5,
   },
-});
+})

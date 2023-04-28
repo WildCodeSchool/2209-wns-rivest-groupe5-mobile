@@ -1,9 +1,9 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import GoodDealsTab from "./goodDealsTab/GoodDealsTab";
-import GoodDealsDetailsScreen from "./GoodDealsDetailsScreen";
+import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import GoodDealsTab from './goodDealsTab/GoodDealsTab'
+import GoodDealsDetailsScreen from './GoodDealsDetailsScreen'
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 const GoodDealsScreen = () => {
   return (
@@ -18,7 +18,7 @@ const GoodDealsScreen = () => {
         component={GoodDealsDetailsScreen}
       />
     </Stack.Navigator>
-  );
-};
+  )
+}
 
-export default GoodDealsScreen;
+export default GoodDealsScreen
