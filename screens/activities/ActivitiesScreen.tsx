@@ -1,9 +1,9 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ActivityDetailsScreen from "./ActivityDetailsScreen";
-import ActivitiesTab from "./activitiesTab/ActivitiesTab";
+import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import ActivityDetailsScreen from './ActivityDetailsScreen'
+import ActivitiesTab from './activitiesTab/ActivitiesTab'
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 const ActivitiesScreen = () => {
   return (
@@ -15,7 +15,7 @@ const ActivitiesScreen = () => {
       />
       <Stack.Screen name="Détails Activité" component={ActivityDetailsScreen} />
     </Stack.Navigator>
-  );
-};
+  )
+}
 
-export default ActivitiesScreen;
+export default ActivitiesScreen

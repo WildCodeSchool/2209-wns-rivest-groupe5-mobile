@@ -1,52 +1,52 @@
-import React, { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import React, { useState } from 'react'
+import { useMutation, useQuery } from '@apollo/client'
 import {
   Stack,
   Button,
   TextInput,
   IconButton,
-} from "@react-native-material/core";
-import { SafeAreaView, Text, View, StyleSheet, Platform } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { ScrollView } from "react-native-gesture-handler";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { GET_ACTIVITY_TYPES } from "../../../graphql/queries/activities/getActivityTypesQuery";
-import { CREATE_ACTIVITY } from "../../../graphql/queries/activities/createActivityMutation";
-import { format } from "date-fns";
+} from '@react-native-material/core'
+import { SafeAreaView, Text, View, StyleSheet, Platform } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
+import { ScrollView } from 'react-native-gesture-handler'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import Icon from '@expo/vector-icons/MaterialCommunityIcons'
+import { GET_ACTIVITY_TYPES } from '../../../graphql/queries/activities/getActivityTypesQuery'
+import { CREATE_ACTIVITY } from '../../../graphql/queries/activities/createActivityMutation'
+import { format } from 'date-fns'
 
 const CreateActivityScreen = ({ navigation }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [activityTypeId, setActivityTypeId] = useState(1);
-  const [carbonQuantityUnit, setCarbonQuantityUnit] = useState("gramme");
-  const [carbonQuantity, setCarbonQuantity] = useState("");
-  const [datePicker, setDatePicker] = useState(false);
-  const [activityDate, setActivityDate] = useState(new Date());
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [activityTypeId, setActivityTypeId] = useState(1)
+  const [carbonQuantityUnit, setCarbonQuantityUnit] = useState('gramme')
+  const [carbonQuantity, setCarbonQuantity] = useState('')
+  const [datePicker, setDatePicker] = useState(false)
+  const [activityDate, setActivityDate] = useState(new Date())
 
   const {
     data: dataActivityTypes,
     loading: loadingActivityTypes,
     error: errorActivityTypes,
-  } = useQuery(GET_ACTIVITY_TYPES);
+  } = useQuery(GET_ACTIVITY_TYPES)
 
   const [
     createActivity,
     { loading: loadingCreateActivity, error: errorCreateActivity },
-  ] = useMutation(CREATE_ACTIVITY);
+  ] = useMutation(CREATE_ACTIVITY)
 
-  if (loadingActivityTypes) return <Text>"Loading..."</Text>;
+  if (loadingActivityTypes) return <Text>"Loading..."</Text>
   if (errorActivityTypes)
-    return <Text>` Error! ${errorActivityTypes.message}`</Text>;
+    return <Text>` Error! ${errorActivityTypes.message}`</Text>
 
   const showDatePicker = () => {
-    setDatePicker(true);
-  };
+    setDatePicker(true)
+  }
 
   const onDateSelected = (event, value) => {
-    setActivityDate(value);
-    setDatePicker(false);
-  };
+    setActivityDate(value)
+    setDatePicker(false)
+  }
 
   function handleSubmit(
     title: string,
@@ -66,20 +66,20 @@ const CreateActivityScreen = ({ navigation }) => {
         },
       },
       onCompleted(data) {
-        alert("Activity created with success");
-        setTitle("");
-        setDescription("");
-        setActivityTypeId(1);
-        setCarbonQuantity("");
-        setActivityDate(new Date());
-        navigation.navigate("Mes Activités");
+        alert('Activity created with success')
+        setTitle('')
+        setDescription('')
+        setActivityTypeId(1)
+        setCarbonQuantity('')
+        setActivityDate(new Date())
+        navigation.navigate('Mes Activités')
       },
       onError(error) {
-        console.log("error", error);
+        console.log('error', error)
 
-        alert("Activity creation failed");
+        alert('Activity creation failed')
       },
-    });
+    })
   }
 
   return (
@@ -88,8 +88,8 @@ const CreateActivityScreen = ({ navigation }) => {
         <View style={{ paddingTop: 30 }}>
           <Text
             style={{
-              fontWeight: "bold",
-              textAlign: "center",
+              fontWeight: 'bold',
+              textAlign: 'center',
               fontSize: 40,
               marginBottom: 20,
             }}
@@ -116,13 +116,13 @@ const CreateActivityScreen = ({ navigation }) => {
             />
             <View
               style={{
-                backgroundColor: "#fff",
-                borderColor: "grey",
-                borderStyle: "solid",
+                backgroundColor: '#fff',
+                borderColor: 'grey',
+                borderStyle: 'solid',
                 borderWidth: 1,
               }}
             >
-              <Text style={{ paddingLeft: 8, paddingTop: 5, color: "grey" }}>
+              <Text style={{ paddingLeft: 8, paddingTop: 5, color: 'grey' }}>
                 Catégorie
               </Text>
               <Picker
@@ -145,13 +145,13 @@ const CreateActivityScreen = ({ navigation }) => {
             </View>
             <View
               style={{
-                backgroundColor: "#fff",
-                borderColor: "grey",
-                borderStyle: "solid",
+                backgroundColor: '#fff',
+                borderColor: 'grey',
+                borderStyle: 'solid',
                 borderWidth: 1,
               }}
             >
-              <Text style={{ paddingLeft: 8, paddingTop: 5, color: "grey" }}>
+              <Text style={{ paddingLeft: 8, paddingTop: 5, color: 'grey' }}>
                 Unité de mesure
               </Text>
               <Picker
@@ -168,14 +168,14 @@ const CreateActivityScreen = ({ navigation }) => {
               placeholder="Quantité de carbone"
               value={carbonQuantity}
               variant="outlined"
-              keyboardType={"numeric"}
+              keyboardType={'numeric'}
               onChangeText={(text) => setCarbonQuantity(text)}
             />
 
             <TextInput
               label="Date de l'activité"
               variant="outlined"
-              value={format(new Date(activityDate), "dd/MM/yyyy")}
+              value={format(new Date(activityDate), 'dd/MM/yyyy')}
               editable={false}
               trailing={(props) => (
                 <IconButton
@@ -189,8 +189,8 @@ const CreateActivityScreen = ({ navigation }) => {
             {datePicker && (
               <DateTimePicker
                 value={activityDate}
-                mode={"date"}
-                display={Platform.OS === "ios" ? "spinner" : "default"}
+                mode={'date'}
+                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                 onChange={onDateSelected}
               />
             )}
@@ -198,8 +198,8 @@ const CreateActivityScreen = ({ navigation }) => {
             {datePicker && (
               <DateTimePicker
                 value={activityDate}
-                mode={"date"}
-                display={Platform.OS === "ios" ? "spinner" : "default"}
+                mode={'date'}
+                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                 onChange={onDateSelected}
               />
             )}
@@ -213,21 +213,21 @@ const CreateActivityScreen = ({ navigation }) => {
             loading={loadingCreateActivity}
             loadingIndicatorPosition="overlay"
             onPress={() => {
-              if (carbonQuantity === "0" || carbonQuantity.includes(",")) {
+              if (carbonQuantity === '0' || carbonQuantity.includes(',')) {
                 alert(
                   "Quantity has to be greater than 0 and for decimals use '.'"
-                );
+                )
               } else if (
-                title.trim() === "" ||
-                description.trim() === "" ||
-                carbonQuantity.toString().trim() === ""
+                title.trim() === '' ||
+                description.trim() === '' ||
+                carbonQuantity.toString().trim() === ''
               ) {
-                alert("Complete all fields, please");
+                alert('Complete all fields, please')
               } else {
                 let carbonToSend =
-                  carbonQuantityUnit === "kilogramme"
+                  carbonQuantityUnit === 'kilogramme'
                     ? Number(carbonQuantity) * 1000
-                    : carbonQuantity;
+                    : carbonQuantity
 
                 handleSubmit(
                   title,
@@ -235,19 +235,19 @@ const CreateActivityScreen = ({ navigation }) => {
                   activityTypeId,
                   activityDate,
                   Number(carbonToSend)
-                );
+                )
               }
             }}
           />
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     height: 50,
     margin: 12,
     marginLeft: 25,
@@ -258,17 +258,17 @@ const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
     padding: 6,
-    alignItems: "center",
-    backgroundColor: "white",
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
 
   text: {
     fontSize: 25,
-    color: "red",
+    color: 'red',
     padding: 3,
     marginBottom: 10,
-    textAlign: "center",
+    textAlign: 'center',
   },
-});
+})
 
-export default CreateActivityScreen;
+export default CreateActivityScreen

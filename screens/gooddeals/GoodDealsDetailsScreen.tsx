@@ -5,23 +5,23 @@ import {
   ImageBackground,
   TouchableOpacity,
   Linking,
-} from 'react-native';
-import React, {useCallback} from 'react';
-import {IGoodDeal} from '../../interfaces/IGoodDeal';
-import {Avatar, Stack} from '@react-native-material/core';
+} from 'react-native'
+import React, { useCallback } from 'react'
+import { IGoodDeal } from '../../interfaces/IGoodDeal'
+import { Avatar, Stack } from '@react-native-material/core'
 
-const GoodDealsDetailsScreen = ({route}: any) => {
-  const { goodDeal }: { goodDeal: IGoodDeal } = route.params;
-  
+const GoodDealsDetailsScreen = ({ route }: any) => {
+  const { goodDeal }: { goodDeal: IGoodDeal } = route.params
+
   const handlePress = useCallback(async () => {
-    const supported = await Linking.canOpenURL(goodDeal.goodDealLink);
+    const supported = await Linking.canOpenURL(goodDeal.goodDealLink)
 
     if (supported) {
-      await Linking.openURL(goodDeal.goodDealLink);
+      await Linking.openURL(goodDeal.goodDealLink)
     } else {
-      alert(`Don't know how to open this URL: ${goodDeal.goodDealLink}`);
+      alert(`Don't know how to open this URL: ${goodDeal.goodDealLink}`)
     }
-  }, [goodDeal.goodDealLink]);
+  }, [goodDeal.goodDealLink])
 
   const label = goodDeal.user.firstname + ' ' + goodDeal.user.lastname
 
@@ -31,7 +31,7 @@ const GoodDealsDetailsScreen = ({route}: any) => {
     <View>
       {goodDeal.image ? (
         <ImageBackground
-          source={{uri: goodDeal.image}}
+          source={{ uri: goodDeal.image }}
           resizeMode="cover"
           style={styles.image}
         ></ImageBackground>
@@ -48,10 +48,10 @@ const GoodDealsDetailsScreen = ({route}: any) => {
         <Stack
           direction="row"
           items="center"
-          style={{marginLeft: 10, marginTop: 20}}
+          style={{ marginLeft: 10, marginTop: 20 }}
         >
           <Avatar label={label} autoColor size={32} />
-          <Text style={{marginLeft: 10}}>
+          <Text style={{ marginLeft: 10 }}>
             {goodDeal.user.firstname} {goodDeal.user.lastname}
           </Text>
         </Stack>
@@ -62,8 +62,8 @@ const GoodDealsDetailsScreen = ({route}: any) => {
         )}
       </Stack>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   image: {
@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#17b2aa',
     padding: 10,
     marginTop: 20,
-    borderRadius: 5
+    borderRadius: 5,
   },
-});
+})
 
-export default GoodDealsDetailsScreen;
+export default GoodDealsDetailsScreen

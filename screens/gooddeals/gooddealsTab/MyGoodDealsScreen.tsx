@@ -1,53 +1,53 @@
-import { Text, SafeAreaView, FlatList, View, StyleSheet } from "react-native";
-import React, { useCallback, useState } from "react";
-import { useLazyQuery } from "@apollo/client";
-import { GoodDealCardFeed } from "../../../components/GoodDealCardFeed";
-import { GoodDealCardFeedPrimary } from "../../../components/GoodDealCardFeedPrimary";
-import { GET_ALL_MY_GOOD_DEALS } from "../../../graphql/queries/goodDeals/getMyGoodDeals";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { IGoodDeal } from "../../../interfaces/IGoodDeal";
-import { Button } from "@react-native-material/core";
+import { Text, SafeAreaView, FlatList, View, StyleSheet } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { useLazyQuery } from '@apollo/client'
+import { GoodDealCardFeed } from '../../../components/GoodDealCardFeed'
+import { GoodDealCardFeedPrimary } from '../../../components/GoodDealCardFeedPrimary'
+import { GET_ALL_MY_GOOD_DEALS } from '../../../graphql/queries/goodDeals/getMyGoodDeals'
+import { useFocusEffect, useIsFocused } from '@react-navigation/native'
+import { IGoodDeal } from '../../../interfaces/IGoodDeal'
+import { Button } from '@react-native-material/core'
 
 const MyGoodDealsScreen = ({ navigation }: any) => {
   const [getMyGoodDeals, { loading, error }] = useLazyQuery(
     GET_ALL_MY_GOOD_DEALS,
-    { fetchPolicy: "no-cache" }
-  );
+    { fetchPolicy: 'no-cache' }
+  )
 
-  const [goodDeals, setGoodDeals] = useState<IGoodDeal[]>([]);
-  const isFocused = useIsFocused();
+  const [goodDeals, setGoodDeals] = useState<IGoodDeal[]>([])
+  const isFocused = useIsFocused()
 
   useFocusEffect(
     useCallback(() => {
       async function fetchGoodDeals() {
         try {
-          const data = await getMyGoodDeals();
+          const data = await getMyGoodDeals()
 
-          const dataGoodDeals = [...data.data.getAllMyGoodDeals];
+          const dataGoodDeals = [...data.data.getAllMyGoodDeals]
           const orderData = dataGoodDeals.sort(
             (a, b) =>
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
+          )
 
-          setGoodDeals(orderData);
+          setGoodDeals(orderData)
         } catch (error) {
           console.log(
-            "🚀 ~ file: MyGoodDealsScreen fetchGoodDeals~ error",
+            '🚀 ~ file: MyGoodDealsScreen fetchGoodDeals~ error',
             error
-          );
-          setGoodDeals([]);
+          )
+          setGoodDeals([])
         }
       }
-      fetchGoodDeals();
+      fetchGoodDeals()
     }, [isFocused])
-  );
+  )
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Text>Loading</Text>
   }
 
   if (error) {
-    return <Text>{error.message}</Text>;
+    return <Text>{error.message}</Text>
   }
 
   return (
@@ -61,7 +61,7 @@ const MyGoodDealsScreen = ({ navigation }: any) => {
             color="#17b2aa"
             tintColor="#fff"
             onPress={() => {
-              navigation.navigate("Créer un bon plan");
+              navigation.navigate('Créer un bon plan')
             }}
           />
         </View>
@@ -79,8 +79,8 @@ const MyGoodDealsScreen = ({ navigation }: any) => {
         />
       )}
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   centerTitle: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
   },
-});
+})
 
-export default MyGoodDealsScreen;
+export default MyGoodDealsScreen

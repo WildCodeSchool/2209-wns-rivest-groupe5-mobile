@@ -1,4 +1,4 @@
-import {Text, View, ImageBackground, StyleSheet} from 'react-native';
+import { Text, View, ImageBackground, StyleSheet } from 'react-native'
 
 export const GoodDealCardFeedPrimary = () => {
   return (
@@ -12,8 +12,8 @@ export const GoodDealCardFeedPrimary = () => {
         <Text style={styles.title}>Bons plans</Text>
       </ImageBackground>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   image: {
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
   },
-});
+})

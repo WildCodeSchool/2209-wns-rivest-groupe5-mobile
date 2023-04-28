@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 export const GET_MY_ACTIVITIES = gql`
   query GetAllMyActivities {
@@ -17,4 +17,4 @@ export const GET_MY_ACTIVITIES = gql`
       }
     }
   }
-`;
+`
