@@ -5,13 +5,16 @@ import {
   ImageBackground,
   TouchableOpacity,
   Linking,
+  useWindowDimensions,
 } from 'react-native'
 import React, { useCallback } from 'react'
 import { IGoodDeal } from '../../interfaces/IGoodDeal'
 import { Avatar, Stack } from '@react-native-material/core'
+import HTML from 'react-native-render-html'
 
 const GoodDealsDetailsScreen = ({ route }: any) => {
   const { goodDeal }: { goodDeal: IGoodDeal } = route.params
+  const windowDimensions = useWindowDimensions()
 
   const handlePress = useCallback(async () => {
     const supported = await Linking.canOpenURL(goodDeal.goodDealLink)
@@ -43,7 +46,12 @@ const GoodDealsDetailsScreen = ({ route }: any) => {
         ></ImageBackground>
       )}
       <Text style={styles.title}>{goodDeal.goodDealTitle}</Text>
-      <Text style={styles.content}>{goodDeal.goodDealContent}</Text>
+      <Text style={styles.content}>
+        <HTML
+          source={{ html: goodDeal.goodDealContent }}
+          contentWidth={windowDimensions.width}
+        />
+      </Text>
       <Stack direction="row" items="center">
         <Stack
           direction="row"
