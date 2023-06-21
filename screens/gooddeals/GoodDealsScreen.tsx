@@ -1,7 +1,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import GoodDealsTab from './goodDealsTab/GoodDealsTab'
 import GoodDealsDetailsScreen from './GoodDealsDetailsScreen'
+import GoodDealsTab from './gooddealsTab/GoodDealsTab'
 
 const Stack = createNativeStackNavigator()
 

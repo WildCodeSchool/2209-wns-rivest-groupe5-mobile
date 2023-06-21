@@ -23,7 +23,7 @@ const MyGoodDealsScreen = ({ navigation }: any) => {
         try {
           const data = await getMyGoodDeals()
 
-          const dataGoodDeals = [...data.data.getAllMyGoodDeals]
+          const dataGoodDeals = [...data.data.getAllMyGoodDeals?.data]
           const orderData = dataGoodDeals.sort(
             (a, b) =>
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()

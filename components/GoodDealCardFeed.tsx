@@ -27,7 +27,7 @@ export const GoodDealCardFeed = (props: any) => {
             {props.goodDeal.goodDealTitle}
           </Text>
           <Text style={styles.content} numberOfLines={2}>
-            {props.goodDeal.goodDealContent}
+            {props.goodDeal.goodDealDescription ?? 'Voir le bon plan'}
           </Text>
         </View>
       </View>

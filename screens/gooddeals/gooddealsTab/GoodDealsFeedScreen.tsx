@@ -1,48 +1,61 @@
-import { Text, SafeAreaView, FlatList } from 'react-native'
-
+import { Text, SafeAreaView, FlatList, View } from 'react-native'
 import { GoodDealCardFeed } from '../../../components/GoodDealCardFeed'
 import { GoodDealCardFeedPrimary } from '../../../components/GoodDealCardFeedPrimary'
-import { useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { IGoodDeal } from '../../../interfaces/IGoodDeal'
-import { useFocusEffect, useIsFocused } from '@react-navigation/native'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { GET_ALL_GOOD_DEALS } from '../../../graphql/queries/goodDeals/getAllGoodDeals'
+import { IPaginatedResult } from '../../../interfaces/IPaginatedResult'
+import { initialPaginatedResultState } from '../../../helpers/initialPaginatedResultState'
+import { ActivityIndicator } from '@react-native-material/core'
+import ScrollListBottomLoader from '../../../components/ScrollListBottomLoader'
 
 const GoodDealsFeedScreen = ({ navigation }: any) => {
-  const [getAllGoodDeals, { loading, error }] = useLazyQuery(
-    GET_ALL_GOOD_DEALS,
-    { fetchPolicy: 'no-cache' }
-  )
-  const [goodDeals, setGoodDeals] = useState<IGoodDeal[]>([])
-  const isFocused = useIsFocused()
+  const [currentPage, setCurrentPage] = useState(1)
 
-  useFocusEffect(
-    useCallback(() => {
-      async function fetchGoodDeals() {
-        try {
-          const data = await getAllGoodDeals()
-          const dataGoodDeals = [...data.data.getAllGoodDeals]
-          const orderData = dataGoodDeals.sort(
-            (a, b) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          )
+  const { loading, error, fetchMore } = useQuery(GET_ALL_GOOD_DEALS, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      page: currentPage,
+    },
+    onCompleted: (data) => {
+      const dataGoodDeals = data.getAllGoodDeals
 
-          setGoodDeals(orderData)
-        } catch (error) {
-          console.log(
-            '🚀 ~ file: GoodDealsFeedScreen fetchGoodDeals~ error',
-            error
-          )
-          setGoodDeals([])
-        }
-      }
-      fetchGoodDeals()
-    }, [isFocused])
+      setGoodDeals((prevGoodDeals) => ({
+        ...dataGoodDeals,
+        data: [...prevGoodDeals.data, ...dataGoodDeals.data],
+      }))
+    },
+  })
+
+  const [goodDeals, setGoodDeals] = useState<IPaginatedResult<IGoodDeal>>(
+    initialPaginatedResultState
   )
 
-  if (loading) {
-    return <Text>Loading</Text>
-  }
+  const fetchMoreGoodDeals = useCallback(async () => {
+    try {
+      const newPage = currentPage + 1
+      await fetchMore({
+        variables: {
+          page: newPage, // Request the next page
+        },
+      })
+
+      setCurrentPage(newPage)
+    } catch (error) {
+      console.log(
+        '🚀 ~ file: GoodDealsFeedScreen fetchMoreGoodDeals ~ error',
+        error
+      )
+      setGoodDeals(initialPaginatedResultState)
+    }
+  }, [fetchMore, currentPage])
+
+  const handleLoadMore = useCallback(() => {
+    if (!loading && currentPage < goodDeals.totalPages) {
+      fetchMoreGoodDeals()
+    }
+  }, [currentPage, loading, goodDeals.totalPages, fetchMoreGoodDeals])
 
   if (error) {
     return <Text>{error.message}</Text>
@@ -52,7 +65,7 @@ const GoodDealsFeedScreen = ({ navigation }: any) => {
     <SafeAreaView style={{ flex: 1 }}>
       <GoodDealCardFeedPrimary />
       <FlatList
-        data={goodDeals}
+        data={goodDeals.data}
         renderItem={({ item }: { item: IGoodDeal }) => (
           <GoodDealCardFeed
             key={item.goodDealId}
@@ -61,6 +74,14 @@ const GoodDealsFeedScreen = ({ navigation }: any) => {
           />
         )}
         keyExtractor={(item) => item.goodDealId.toString()}
+        ListFooterComponent={
+          <ScrollListBottomLoader
+            currentPage={currentPage}
+            totalPages={goodDeals.totalPages}
+          />
+        }
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.1}
       />
     </SafeAreaView>
   )
