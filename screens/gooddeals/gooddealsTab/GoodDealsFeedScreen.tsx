@@ -1,13 +1,12 @@
-import { Text, SafeAreaView, FlatList, View } from 'react-native'
+import { Text, SafeAreaView, FlatList } from 'react-native'
 import { GoodDealCardFeed } from '../../../components/GoodDealCardFeed'
 import { GoodDealCardFeedPrimary } from '../../../components/GoodDealCardFeedPrimary'
 import { useQuery } from '@apollo/client'
 import { IGoodDeal } from '../../../interfaces/IGoodDeal'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { GET_ALL_GOOD_DEALS } from '../../../graphql/queries/goodDeals/getAllGoodDeals'
 import { IPaginatedResult } from '../../../interfaces/IPaginatedResult'
 import { initialPaginatedResultState } from '../../../helpers/initialPaginatedResultState'
-import { ActivityIndicator } from '@react-native-material/core'
 import ScrollListBottomLoader from '../../../components/ScrollListBottomLoader'
 
 const GoodDealsFeedScreen = ({ navigation }: any) => {
