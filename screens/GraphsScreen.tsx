@@ -7,6 +7,8 @@ import { GET_MY_LAST_MONTH_ACTIVITIES_GRAPH_DATA } from '../graphql/queries/carb
 import { GET_MY_LAST_YEAR_ACTIVITIES_GRAPH_DATA } from '../graphql/queries/carbonGraphs/getMyLastYearActivitiesGraphData'
 import { GET_TOTAL_SUMS_ACTIVITIES_GRAPH_DATA } from '../graphql/queries/carbonGraphs/getTotalSumsActivitiesGraphData'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Avatar, Banner } from '@react-native-material/core'
+import { Feather } from '@expo/vector-icons'
 
 const GraphsScreen = () => {
   type barChartTimeUnitType = 'week' | 'month' | 'year'
@@ -96,10 +98,18 @@ const GraphsScreen = () => {
 
   return (
     <View>
-      <Text style={styles.paragraph}>
-        Pour bénéficier de données détaillées, nous vous conseillons d'utiliser
-        notre version web de l'application.
-      </Text>
+      <Banner
+        illustration={(props) => (
+          <Avatar
+            color="#17b2aa"
+            icon={(props) => <Feather name="info" size={24} color="white" />}
+            {...props}
+          />
+        )}
+        text="Nous vous conseillons d'utiliser notre application web pour créer des bons plans !"
+        buttons={null}
+        style={{ marginBottom: 20 }}
+      />
       <Text style={styles.title}>Sur la dernière période :</Text>
       <View style={styles.container}>
         <TouchableOpacity
@@ -162,12 +172,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginBottom: 10,
-    textAlign: 'center',
-  },
-  paragraph: {
-    fontSize: 15,
-    marginTop: 10,
-    marginBottom: 40,
     textAlign: 'center',
   },
   container: {
