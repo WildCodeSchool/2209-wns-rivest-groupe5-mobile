@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
-import { Stack, TextInput, Button, Text } from '@react-native-material/core'
+import { Stack, TextInput, Button, Text, Banner, Avatar } from '@react-native-material/core'
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 import {
   SafeAreaView,
@@ -9,11 +9,12 @@ import {
 import { ScrollView } from 'react-native-gesture-handler'
 import { useState } from 'react'
 import { UploadPictureInput } from '../../../components/UploadPictureInput'
-
+import { Feather } from '@expo/vector-icons';
 const CREATE_GOOD_DEAL = gql`
   mutation CreateGoodDeal($data: CreateGoodDealInput!) {
     createGoodDeal(data: $data) {
       goodDealTitle
+      goodDealDescription
       goodDealContent
       goodDealLink
       image
@@ -21,17 +22,19 @@ const CREATE_GOOD_DEAL = gql`
   }
 `
 
-export const CreateGoodDealScreen = ({ navigation }) => {
+export const CreateGoodDealScreen = ({ navigation } : any) => {
   const [createGoodDeal, { loading }] = useMutation(CREATE_GOOD_DEAL)
   const [isLoadingPicture, setIsLoadingPicture] = useState(false)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [content, setContent] = useState('')
   const [link, setLink] = useState('')
   const [pictureUrl, setPictureUrl] = useState('')
 
   function handleSubmit(
     title: string,
     description: string,
+    content: string,
     link: string,
     imageUrl: string
   ) {
@@ -41,11 +44,15 @@ export const CreateGoodDealScreen = ({ navigation }) => {
     if (description.trim() === '') {
       return alert('Renseigner une description')
     }
+    if( content.trim() === ''){
+      return alert('Renseigner un contenu')
+    }
     createGoodDeal({
       variables: {
         data: {
           goodDealTitle: title,
-          goodDealContent: description,
+          goodDealContent: content,
+          goodDealDescription: description,
           goodDealLink: link,
           image: imageUrl,
         },
@@ -54,6 +61,7 @@ export const CreateGoodDealScreen = ({ navigation }) => {
         alert('Good deal published with success')
         setTitle('')
         setDescription('')
+        setContent('')
         setLink('')
         setPictureUrl('')
         //pass the new good deal id to the below navigate()
@@ -67,8 +75,20 @@ export const CreateGoodDealScreen = ({ navigation }) => {
   }
   return (
     <SafeAreaView>
-      <ScrollView style={{ paddingTop: 60 }}>
+      <ScrollView>
+          <Banner
+            illustration={props => (
+              <Avatar
+                color="#17b2aa"
+                icon={props => <Feather name="info" size={24} color="white" />}
+                {...props} />
+            )}
+            text="Nous vous conseillons d'utiliser notre application web pour créer des bons plans !" 
+            buttons={null}   
+            style={{ marginBottom: 20 }}       
+          />
         <Stack spacing={30} style={{ marginLeft: 25, marginRight: 25 }}>
+          
           <Text
             style={{
               fontWeight: 'bold',
@@ -96,6 +116,14 @@ export const CreateGoodDealScreen = ({ navigation }) => {
             onChangeText={(text) => setDescription(text)}
           />
 
+          <TextInputFromRn
+            style={styles.input}
+            placeholder="Contenu"
+            multiline={true}
+            value={content}
+            onChangeText={(text) => setContent(text)}
+          />
+
           <TextInput
             label="Lien"
             autoCapitalize={'none'}
@@ -115,7 +143,7 @@ export const CreateGoodDealScreen = ({ navigation }) => {
             title="Publier"
             trailing={(props) => <Icon name="send" {...props} />}
             onPress={() => {
-              handleSubmit(title, description, link, pictureUrl)
+              handleSubmit(title, description, content, link, pictureUrl)
             }}
             loading={loading === true || isLoadingPicture === true}
             loadingIndicatorPosition="overlay"

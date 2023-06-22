@@ -66,6 +66,7 @@ export const RegisterScreen = ({ navigation }) => {
         navigation.navigate('Connexion')
       },
       onError(error) {
+        console.log(error)
         alert('Registration failed')
       },
     })
@@ -132,7 +133,6 @@ export const RegisterScreen = ({ navigation }) => {
 
           <Button
             title="S'inscrire"
-            color="#2ECE65"
             tintColor="#FFFFFF"
             style={styles.button}
             loading={loading}
@@ -141,7 +141,7 @@ export const RegisterScreen = ({ navigation }) => {
           />
           <Text style={{ textAlign: 'center', marginTop: 20 }}>
             Déjà membre?{' '}
-            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Login' }}>
+            <Link style={{ color: '#17b2aa' }} to={{ screen: 'Login' }}>
               Connecte-toi
             </Link>
           </Text>
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   button: {
-    backgroundColor: '#2ECE65',
+    backgroundColor: '#17b2aa',
     borderRadius: 10,
     height: 50,
     marginTop: 50,

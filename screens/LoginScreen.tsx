@@ -67,7 +67,7 @@ export const LoginScreen = ({ navigation }) => {
           </Stack>
           <Button
             title="Me Connecter"
-            color="#2ECE65"
+            color="#17b2aa"
             tintColor="#FFFFFF"
             style={styles.button}
             loading={loading}
@@ -96,7 +96,7 @@ export const LoginScreen = ({ navigation }) => {
           />
           <Text style={{ textAlign: 'center', marginTop: 20 }}>
             Pas encore de compte?{' '}
-            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Register' }}>
+            <Link style={{ color: '#17b2aa' }} to={{ screen: 'Register' }}>
               Rejoins nous
             </Link>
           </Text>

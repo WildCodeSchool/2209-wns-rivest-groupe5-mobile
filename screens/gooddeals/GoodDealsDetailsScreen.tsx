@@ -11,6 +11,7 @@ import React, { useCallback } from 'react'
 import { IGoodDeal } from '../../interfaces/IGoodDeal'
 import { Avatar, Stack } from '@react-native-material/core'
 import HTML from 'react-native-render-html'
+import * as SecureStore from 'expo-secure-store'
 
 const GoodDealsDetailsScreen = ({ route }: any) => {
   const { goodDeal }: { goodDeal: IGoodDeal } = route.params
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
   content: {
     paddingRight: 10,
     paddingLeft: 10,
+    marginLeft: 15
   },
   button: {
     marginLeft: 100,
