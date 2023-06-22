@@ -141,7 +141,7 @@ export const RegisterScreen = ({ navigation }) => {
           />
           <Text style={{ textAlign: 'center', marginTop: 20 }}>
             Déjà membre?{' '}
-            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Login' }}>
+            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Connexion' }}>
               Connecte-toi
             </Link>
           </Text>

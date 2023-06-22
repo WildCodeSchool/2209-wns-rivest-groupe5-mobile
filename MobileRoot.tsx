@@ -26,7 +26,7 @@ const MobileRoot = ({ resetClient }: any) => {
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
         {user !== null && (
-          <DrawerItem label="Logout" onPress={() => logout(props)} />
+          <DrawerItem label="Déconnexion" onPress={() => logout(props)} />
         )}
       </DrawerContentScrollView>
     )

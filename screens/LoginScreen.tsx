@@ -93,7 +93,7 @@ export const LoginScreen = ({ navigation }) => {
           />
           <Text style={{ textAlign: 'center', marginTop: 20 }}>
             Pas encore de compte?{' '}
-            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Register' }}>
+            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Inscription' }}>
               Rejoins nous
             </Link>
           </Text>

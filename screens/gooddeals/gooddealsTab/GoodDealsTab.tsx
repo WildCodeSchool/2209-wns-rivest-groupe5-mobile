@@ -14,14 +14,14 @@ const GoodDealsTab = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Feed bons plans"
+      initialRouteName="Liste bons plans"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: keyof typeof Ionicons.glyphMap | undefined
 
           if (route.name === 'Mes bons plans') {
             iconName = focused ? 'book' : 'book-outline'
-          } else if (route.name === 'Feed bons plans') {
+          } else if (route.name === 'Tous les bons plans') {
             iconName = focused ? 'albums' : 'albums-outline'
           } else if (route.name === 'Créer un bon plan') {
             iconName = focused ? 'add-circle' : 'add-circle-outline'
@@ -36,7 +36,7 @@ const GoodDealsTab = () => {
         <Tab.Screen name="Mes bons plans" component={MyGoodDealsScreen} />
       )}
       <Tab.Screen
-        name="Feed bons plans"
+        name="Tous les bons plans"
         component={GoodDealsFeedScreen}
         options={{ unmountOnBlur: true }}
       />
