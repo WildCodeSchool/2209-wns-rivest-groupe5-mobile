@@ -80,11 +80,8 @@ export const LoginScreen = ({ navigation }) => {
                   console.log('>>>>DATA FROM LOGIN >>>>', data)
                   saveTokenInSecureStore('token', data.getToken.token)
                   setUser(data.userFromDB)
-                  navigation.navigate('Activités', {
-                    screen: 'ActivitiesTab',
-                    params: {
-                      screen: 'Mes Activités',
-                    },
+                  navigation.navigate('Statistiques', {
+                    screen: 'GraphsScreen',
                   })
                 },
                 onError(error) {

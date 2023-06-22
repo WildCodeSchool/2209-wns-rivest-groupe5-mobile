@@ -14,6 +14,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer'
 import * as SecureStore from 'expo-secure-store'
+import GraphsScreen from './screens/GraphsScreen'
 
 const Drawer = createDrawerNavigator()
 
@@ -65,7 +66,13 @@ const MobileRoot = ({ resetClient }: any) => {
             drawerItemStyle: { display: user === null ? 'flex' : 'none' },
           }}
         />
-        <Drawer.Screen name="Bons plans" component={GoodDealsScreen} />
+        <Drawer.Screen
+          name="Statistiques"
+          component={GraphsScreen}
+          options={{
+            drawerItemStyle: { display: user !== null ? 'flex' : 'none' },
+          }}
+        />
         <Drawer.Screen
           name="Activités"
           component={ActivitiesScreen}
@@ -73,6 +80,7 @@ const MobileRoot = ({ resetClient }: any) => {
             drawerItemStyle: { display: user !== null ? 'flex' : 'none' },
           }}
         />
+        <Drawer.Screen name="Bons plans" component={GoodDealsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   )
