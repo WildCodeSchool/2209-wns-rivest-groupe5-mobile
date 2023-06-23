@@ -69,7 +69,7 @@ export const HomeScreen = ({ navigation }: any) => {
             color="#17b2aa"
             tintColor="#fff"
             onPress={() => {
-              navigation.navigate('GoodDeals')
+              navigation.navigate('Bons plans')
             }}
           />
         </View>
