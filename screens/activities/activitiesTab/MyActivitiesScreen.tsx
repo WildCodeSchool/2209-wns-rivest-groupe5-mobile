@@ -9,6 +9,7 @@ import { IPaginatedResult } from '../../../interfaces/IPaginatedResult'
 import { initialPaginatedResultState } from '../../../helpers/initialPaginatedResultState'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ScrollListBottomLoader from '../../../components/ScrollListBottomLoader'
+import { useFocusEffect } from '@react-navigation/native'
 
 const MyActivitiesScreen = ({ navigation }: { navigation: any }) => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -17,7 +18,7 @@ const MyActivitiesScreen = ({ navigation }: { navigation: any }) => {
     initialPaginatedResultState
   )
 
-  const { loading, error, fetchMore } = useQuery(GET_MY_ACTIVITIES, {
+  const { loading, error, fetchMore, refetch } = useQuery(GET_MY_ACTIVITIES, {
     fetchPolicy: 'no-cache',
     variables: {
       page: currentPage,
@@ -57,6 +58,19 @@ const MyActivitiesScreen = ({ navigation }: { navigation: any }) => {
     }
   }, [currentPage, loading, activities.totalPages, fetchMoreActivities])
 
+  // when the screen is focused, refetch the data to be sure to have actualised data
+  useFocusEffect(
+    useCallback(() => {
+      setActivities(initialPaginatedResultState)
+      const refetchData = async () => {
+        const res = await refetch()
+        setActivities(res.data.getAllMyActivities)
+      }
+
+      refetchData()
+    }, [refetch])
+  )
+
   if (error) {
     return (
       <View style={styles.container}>
@@ -69,6 +83,9 @@ const MyActivitiesScreen = ({ navigation }: { navigation: any }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Text style={styles.centerTitle}>
+        {activities.total} activités enregistrées
+      </Text>
       {activities.data.length === 0 ? (
         <View style={styles.container}>
           <Text style={styles.centerTitle}>Aucune activité enregistrée</Text>
@@ -129,7 +146,7 @@ const styles = StyleSheet.create({
   },
   centerTitle: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 10,
   },
