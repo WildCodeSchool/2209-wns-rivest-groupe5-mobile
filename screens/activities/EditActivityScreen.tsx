@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import {
   Stack,
@@ -11,18 +11,35 @@ import { Picker } from '@react-native-picker/picker'
 import { ScrollView } from 'react-native-gesture-handler'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
-import { GET_ACTIVITY_TYPES } from '../../../graphql/queries/activities/getActivityTypesQuery'
-import { CREATE_ACTIVITY } from '../../../graphql/queries/activities/createActivityMutation'
 import { format } from 'date-fns'
+import { IActivity } from '../../interfaces/IActivity'
+import { GET_ACTIVITY_TYPES } from '../../graphql/queries/activities/getActivityTypesQuery'
+import UPDATE_ACTIVITY from '../../graphql/queries/activities/updateActivity'
 
-const CreateActivityScreen = ({ navigation }) => {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [activityTypeId, setActivityTypeId] = useState(1)
+const EditActivityScreen = ({
+  onClose,
+  afterUpdate,
+  activity,
+}: {
+  onClose: () => void
+  afterUpdate: () => void
+  activity: IActivity
+}) => {
+  const [title, setTitle] = useState(activity.title)
+  const [description, setDescription] = useState(activity.description)
+  const [activityTypeId, setActivityTypeId] = useState(
+    activity.activityType.activityTypeId
+  )
   const [carbonQuantityUnit, setCarbonQuantityUnit] = useState('gramme')
-  const [carbonQuantity, setCarbonQuantity] = useState('')
+  const [carbonQuantity, setCarbonQuantity] = useState(
+    activity.carbonQuantity.toString()
+  )
   const [datePicker, setDatePicker] = useState(false)
-  const [activityDate, setActivityDate] = useState(new Date())
+  const [activityDate, setActivityDate] = useState(
+    new Date(activity.activityDate)
+  )
+
+  const initialActivityDate = useRef(new Date(activity.activityDate)) // persist date even if rerender
 
   const {
     data: dataActivityTypes,
@@ -31,9 +48,9 @@ const CreateActivityScreen = ({ navigation }) => {
   } = useQuery(GET_ACTIVITY_TYPES)
 
   const [
-    createActivity,
-    { loading: loadingCreateActivity, error: errorCreateActivity },
-  ] = useMutation(CREATE_ACTIVITY)
+    updateActivity,
+    { loading: loadingUpdateActivity, error: errorUpdateActivity },
+  ] = useMutation(UPDATE_ACTIVITY)
 
   if (loadingActivityTypes) return <Text>Chargement...</Text>
   if (errorActivityTypes)
@@ -44,8 +61,11 @@ const CreateActivityScreen = ({ navigation }) => {
   }
 
   const onDateSelected = (event, value) => {
-    setActivityDate(value)
     setDatePicker(false)
+
+    if (event.type === 'set') {
+      setActivityDate(value || initialActivityDate.current)
+    }
   }
 
   function handleSubmit(
@@ -55,7 +75,7 @@ const CreateActivityScreen = ({ navigation }) => {
     activityDate: Date,
     carbonQuantity: number
   ) {
-    createActivity({
+    updateActivity({
       variables: {
         data: {
           title: title,
@@ -64,20 +84,24 @@ const CreateActivityScreen = ({ navigation }) => {
           carbonQuantity: carbonQuantity,
           activityDate: activityDate,
         },
+        activityId: activity.activityId,
       },
       onCompleted(data) {
-        alert('Activité créée avec succès')
+        alert('Activité mise à jour avec succès')
         setTitle('')
         setDescription('')
         setActivityTypeId(1)
         setCarbonQuantity('')
         setActivityDate(new Date())
-        navigation.navigate('Mes Activités')
+
+        afterUpdate() // refresh current activity in details screen
+
+        onClose()
       },
       onError(error) {
         console.log('error', error)
 
-        alert('Erreur lors de la création')
+        alert('Erreur lors de la mise à jour')
       },
     })
   }
@@ -94,7 +118,7 @@ const CreateActivityScreen = ({ navigation }) => {
               marginBottom: 20,
             }}
           >
-            Enregistrer une nouvelle activité
+            Mettre à jour l'activité
           </Text>
 
           <Stack spacing={20} style={{ marginLeft: 25, marginRight: 25 }}>
@@ -168,7 +192,8 @@ const CreateActivityScreen = ({ navigation }) => {
             </View>
             <TextInput
               placeholder="Quantité de carbone"
-              value={carbonQuantity}
+              label="Quantité de carbone"
+              value={carbonQuantity.toString()}
               variant="outlined"
               keyboardType={'numeric'}
               onChangeText={(text) => setCarbonQuantity(text)}
@@ -178,7 +203,7 @@ const CreateActivityScreen = ({ navigation }) => {
               label="Date de l'activité"
               variant="outlined"
               value={format(new Date(activityDate), 'dd/MM/yyyy')}
-              editable={false}
+              editable={true}
               trailing={(props) => (
                 <IconButton
                   icon={(props) => (
@@ -196,23 +221,14 @@ const CreateActivityScreen = ({ navigation }) => {
                 onChange={onDateSelected}
               />
             )}
-
-            {datePicker && (
-              <DateTimePicker
-                value={activityDate}
-                mode={'date'}
-                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                onChange={onDateSelected}
-              />
-            )}
           </Stack>
 
           <Button
-            title="Enregistrer"
+            title="Mettre à jour"
             color="#003c49"
             tintColor="#fff"
-            style={{ margin: 25, padding: 10 }}
-            loading={loadingCreateActivity}
+            style={{ margin: 25, marginBottom: 5, padding: 10 }}
+            loading={loadingUpdateActivity}
             loadingIndicatorPosition="overlay"
             onPress={() => {
               if (carbonQuantity === '0' || carbonQuantity.includes(',')) {
@@ -221,6 +237,7 @@ const CreateActivityScreen = ({ navigation }) => {
                 )
               } else if (
                 title.trim() === '' ||
+                !description ||
                 description.trim() === '' ||
                 carbonQuantity.toString().trim() === ''
               ) {
@@ -240,6 +257,13 @@ const CreateActivityScreen = ({ navigation }) => {
                 )
               }
             }}
+          />
+          <Button
+            title="Annuler"
+            color="#ddd"
+            tintColor="#000"
+            style={{ margin: 25, marginTop: 0, padding: 10 }}
+            onPress={onClose}
           />
         </View>
       </ScrollView>
@@ -273,4 +297,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CreateActivityScreen
+export default EditActivityScreen
