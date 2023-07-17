@@ -106,7 +106,7 @@ const GraphsScreen = () => {
             {...props}
           />
         )}
-        text="Nous vous conseillons d'utiliser notre application web pour créer des bons plans !"
+        text="Nous vous conseillons d'utiliser notre application web pour mieux visualiser vos statistiques !"
         buttons={null}
         style={{ marginBottom: 20 }}
       />
@@ -115,7 +115,7 @@ const GraphsScreen = () => {
         <TouchableOpacity
           style={[
             styles.button,
-            barChartTimeUnit === 'week' && { backgroundColor: '#2ECE65' },
+            barChartTimeUnit === 'week' && { backgroundColor: '#17b2aa' },
           ]}
           onPress={() => handleButtonClick('week')}
         >
@@ -125,7 +125,7 @@ const GraphsScreen = () => {
         <TouchableOpacity
           style={[
             styles.button,
-            barChartTimeUnit === 'month' && { backgroundColor: '#2ECE65' },
+            barChartTimeUnit === 'month' && { backgroundColor: '#17b2aa' },
           ]}
           onPress={() => handleButtonClick('month')}
         >
@@ -135,7 +135,7 @@ const GraphsScreen = () => {
         <TouchableOpacity
           style={[
             styles.button,
-            barChartTimeUnit === 'year' && { backgroundColor: '#2ECE65' },
+            barChartTimeUnit === 'year' && { backgroundColor: '#17b2aa' },
           ]}
           onPress={() => handleButtonClick('year')}
         >
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginLeft: 5,
     marginRight: 5,
+    borderRadius: 5,
   },
   buttonText: {
     color: 'white',

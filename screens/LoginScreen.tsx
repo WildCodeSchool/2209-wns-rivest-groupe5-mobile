@@ -40,13 +40,13 @@ export const LoginScreen = ({ navigation }) => {
             style={{
               fontWeight: 'bold',
               textAlign: 'center',
-              fontSize: 40,
+              fontSize: 30,
               marginBottom: 40,
             }}
           >
-            Rejoins la communauté WildCarbon
+            Content de te revoir !
           </Text>
-          <Stack spacing={30} style={{ marginLeft: 25, marginRight: 25 }}>
+          <Stack spacing={10} style={{ marginLeft: 25, marginRight: 25 }}>
             <TextInput
               label="Email"
               value={email}
@@ -67,7 +67,7 @@ export const LoginScreen = ({ navigation }) => {
           </Stack>
           <Button
             title="Me Connecter"
-            color="#2ECE65"
+            color="#17b2aa"
             tintColor="#FFFFFF"
             style={styles.button}
             loading={loading}
@@ -77,7 +77,7 @@ export const LoginScreen = ({ navigation }) => {
                 variables: { email, password },
                 onCompleted(data) {
                   //store token via secure store
-                  console.log('>>>>DATA FROM LOGIN >>>>', data)
+                  // console.log('>>>>DATA FROM LOGIN >>>>', data)
                   saveTokenInSecureStore('token', data.getToken.token)
                   setUser(data.userFromDB)
                   navigation.navigate('Statistiques', {
@@ -86,14 +86,14 @@ export const LoginScreen = ({ navigation }) => {
                 },
                 onError(error) {
                   console.log(error)
-                  alert('Login failed')
+                  alert('Erreur lors de votre connexion.')
                 },
               })
             }}
           />
           <Text style={{ textAlign: 'center', marginTop: 20 }}>
             Pas encore de compte?{' '}
-            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Inscription' }}>
+            <Link style={{ color: '#17b2aa' }} to={{ screen: 'Inscription' }}>
               Rejoins nous
             </Link>
           </Text>
@@ -106,7 +106,7 @@ export const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   button: {
     height: 50,
-    marginTop: 50,
+    marginTop: 30,
     marginLeft: 100,
     marginRight: 100,
     marginBottom: 50,

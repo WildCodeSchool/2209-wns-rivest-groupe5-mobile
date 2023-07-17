@@ -51,33 +51,33 @@ export const CreateGoodDealScreen = ({ navigation }) => {
         },
       },
       onCompleted(data) {
-        alert('Good deal published with success')
+        alert('Astuce publiée avec succès !')
         setTitle('')
         setDescription('')
         setLink('')
         setPictureUrl('')
         //pass the new good deal id to the below navigate()
-        navigation.navigate('Mes bons plans')
+        navigation.navigate('Mes Astuces')
       },
       onError(error) {
-        console.log('>>>>ERROR GOOD DEAL CREATION FAILED >>>>', error.message)
-        alert('Good deal creation failed')
+        // console.log('>>>>ERROR GOOD DEAL CREATION FAILED >>>>', error.message)
+        alert("Erreur lors de la création d'une astuce")
       },
     })
   }
   return (
     <SafeAreaView>
       <ScrollView style={{ paddingTop: 60 }}>
-        <Stack spacing={30} style={{ marginLeft: 25, marginRight: 25 }}>
+        <Stack spacing={10} style={{ marginLeft: 25, marginRight: 25 }}>
           <Text
             style={{
               fontWeight: 'bold',
               textAlign: 'center',
-              fontSize: 40,
-              marginBottom: 40,
+              fontSize: 30,
+              marginBottom: 10,
             }}
           >
-            Partages tes bons plans!
+            Partages tes Astuces!
           </Text>
           <TextInput
             label="Titre"
@@ -120,7 +120,7 @@ export const CreateGoodDealScreen = ({ navigation }) => {
             loading={loading === true || isLoadingPicture === true}
             loadingIndicatorPosition="overlay"
             style={{
-              backgroundColor: '#003c49',
+              backgroundColor: '#17b2aa',
               marginTop: 40,
               marginBottom: 100,
             }}

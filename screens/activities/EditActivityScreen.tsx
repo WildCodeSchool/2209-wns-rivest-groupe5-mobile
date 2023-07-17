@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   MainContainer: {
     flex: 1,

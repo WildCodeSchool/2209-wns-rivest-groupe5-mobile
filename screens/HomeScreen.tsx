@@ -19,30 +19,25 @@ export const HomeScreen = ({ navigation }: any) => {
           />
         </View>
         <Text style={styles.title}>
-          L'application qui vous aide à réduire votre empreinte carbone
-        </Text>
-
-        <Text variant="body1" style={styles.body}>
-          Suivez vos activités carbone, montrez vos progrès à vos amis et
-          profitez des bons plans partagés au quotidien.
+          Du bilan carbone à la réduction de vos émissions
         </Text>
 
         <Button
-          title="Créer mon compte"
-          color="#17b2aa"
+          title="Je me connecte"
+          color="#003c49"
           tintColor="#fff"
-          style={{ margin: 10 }}
+          style={{ margin: 10, marginBottom: 5 }}
           onPress={() => {
-            navigation.navigate('Inscription')
+            navigation.navigate('Connexion')
           }}
         />
         <Button
-          title="Me connecter"
-          color="#003c49"
+          title="Je m'inscris"
+          color="#17b2aa"
           tintColor="#fff"
-          style={{ margin: 10 }}
+          style={{ margin: 10, marginTop: 0 }}
           onPress={() => {
-            navigation.navigate('Connexion')
+            navigation.navigate('Inscription')
           }}
         />
         <View
@@ -56,20 +51,24 @@ export const HomeScreen = ({ navigation }: any) => {
           }}
         >
           <Text style={[styles.title, styles.whiteContrast]}>
-            Ici, les meilleurs bons plans !
+            Découvrez pleins d'astuces !
           </Text>
           <View style={styles.imageContainer}>
             <Image source={require('../assets/super_bons_plans.jpg')} />
           </View>
-          <Text variant="body1" style={{ color: '#fff', margin: 20 }}>
-            Chaque jour des nouveaux bons plans carbone à découvrir !
+          <Text
+            variant="body1"
+            style={{ color: '#fff', margin: 20, textAlign: 'center' }}
+          >
+            Chaque jour, la communeauté Wildcarbon publie des astuces pour
+            réduire son empreinte carbone. Venez les découvrir !
           </Text>
           <Button
-            title="Voir les bons plans"
+            title="Découvrir"
             color="#17b2aa"
             tintColor="#fff"
             onPress={() => {
-              navigation.navigate('Bons plans')
+              navigation.navigate('Astuces')
             }}
           />
         </View>
@@ -92,8 +91,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 30,
-
+    fontSize: 20,
     paddingBottom: 15,
   },
   whiteContrast: {
@@ -111,6 +109,6 @@ const styles = StyleSheet.create({
   logo: {
     resizeMode: 'contain',
     flex: 0.8,
-    aspectRatio: 2.5,
+    aspectRatio: 2,
   },
 })

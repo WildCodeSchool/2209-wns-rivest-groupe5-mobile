@@ -90,11 +90,11 @@ const CreateActivityScreen = ({ navigation }) => {
             style={{
               fontWeight: 'bold',
               textAlign: 'center',
-              fontSize: 40,
-              marginBottom: 20,
+              fontSize: 30,
+              marginBottom: 10,
             }}
           >
-            Enregistrer une nouvelle activité
+            Nouvelle activité
           </Text>
 
           <Stack spacing={20} style={{ marginLeft: 25, marginRight: 25 }}>
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   MainContainer: {
     flex: 1,

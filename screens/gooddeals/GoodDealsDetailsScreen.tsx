@@ -46,26 +46,32 @@ const GoodDealsDetailsScreen = ({ route }: any) => {
         ></ImageBackground>
       )}
       <Text style={styles.title}>{goodDeal.goodDealTitle}</Text>
-      <Text style={styles.content}>
+      <Stack
+        direction="row"
+        items="center"
+        style={{ justifyContent: 'center', marginBottom: 40 }}
+      >
+        <Avatar label={label} autoColor size={20} />
+        <Text style={{ marginLeft: 5 }}>
+          {goodDeal.user.firstname} {goodDeal.user.lastname}
+        </Text>
+      </Stack>
+      <View style={styles.content}>
         <HTML
           source={{ html: goodDeal.goodDealContent }}
           contentWidth={windowDimensions.width}
         />
-      </Text>
-      <Stack direction="row" items="center">
-        <Stack
-          direction="row"
-          items="center"
-          style={{ marginLeft: 10, marginTop: 20 }}
-        >
-          <Avatar label={label} autoColor size={32} />
-          <Text style={{ marginLeft: 10 }}>
-            {goodDeal.user.firstname} {goodDeal.user.lastname}
-          </Text>
-        </Stack>
+      </View>
+      <Stack
+        direction="row"
+        items="center"
+        style={{ margin: 30, marginTop: 100, justifyContent: 'center' }}
+      >
         {goodDeal.goodDealLink && (
           <TouchableOpacity style={styles.button} onPress={handlePress}>
-            <Text>Accéder au bon plan</Text>
+            <Text style={{ color: '#fff' }}>
+              Voir la ressource complémentaire
+            </Text>
           </TouchableOpacity>
         )}
       </Stack>
@@ -83,18 +89,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: '700',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   content: {
     paddingRight: 10,
     paddingLeft: 10,
   },
   button: {
-    marginLeft: 100,
     alignItems: 'center',
     backgroundColor: '#17b2aa',
     padding: 10,
-    marginTop: 20,
     borderRadius: 5,
   },
 })

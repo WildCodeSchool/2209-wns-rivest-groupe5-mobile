@@ -73,7 +73,7 @@ const MyGoodDealsScreen = ({ navigation }: any) => {
             color="#17b2aa"
             tintColor="#fff"
             onPress={() => {
-              navigation.navigate('Créer un bon plan')
+              navigation.navigate('Créer une astuce')
             }}
           />
         </View>
