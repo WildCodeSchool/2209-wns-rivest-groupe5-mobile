@@ -48,6 +48,7 @@ export const HomeScreen = ({ navigation }: any) => {
             paddingBottom: 25,
             paddingLeft: 15,
             paddingRight: 15,
+            borderRadius: 5,
           }}
         >
           <Text style={[styles.title, styles.whiteContrast]}>
@@ -60,7 +61,7 @@ export const HomeScreen = ({ navigation }: any) => {
             variant="body1"
             style={{ color: '#fff', margin: 20, textAlign: 'center' }}
           >
-            Chaque jour, la communeauté Wildcarbon publie des astuces pour
+            Chaque jour, la communeauté WildCarbon publie des astuces pour
             réduire son empreinte carbone. Venez les découvrir !
           </Text>
           <Button
