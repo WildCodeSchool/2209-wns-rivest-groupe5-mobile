@@ -1,15 +1,9 @@
 import { gql, useMutation } from '@apollo/client'
 import { Stack, Button, TextInput } from '@react-native-material/core'
 import { useState } from 'react'
-import {
-  SafeAreaView,
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native'
+import { SafeAreaView, Text, View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useTheme, Link } from '@react-navigation/native'
+import { Link } from '@react-navigation/native'
 
 const CREATE_USER = gql`
   mutation CreateUser(

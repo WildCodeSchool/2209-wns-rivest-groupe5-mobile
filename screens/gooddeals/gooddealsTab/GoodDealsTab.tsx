@@ -28,7 +28,7 @@ const GoodDealsTab = () => {
           }
           return <Ionicons name={iconName} size={size} color={color} />
         },
-        tabBarActiveTintColor: '#003c49',
+        tabBarActiveTintColor: '#17b2aa',
         tabBarInactiveTintColor: 'gray',
       })}
     >

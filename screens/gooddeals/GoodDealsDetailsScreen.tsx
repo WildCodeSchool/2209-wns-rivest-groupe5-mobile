@@ -11,6 +11,7 @@ import React, { useCallback } from 'react'
 import { IGoodDeal } from '../../interfaces/IGoodDeal'
 import { Avatar, Stack } from '@react-native-material/core'
 import HTML from 'react-native-render-html'
+import { format } from 'date-fns'
 
 const GoodDealsDetailsScreen = ({ route }: any) => {
   const { goodDeal }: { goodDeal: IGoodDeal } = route.params
@@ -53,7 +54,9 @@ const GoodDealsDetailsScreen = ({ route }: any) => {
       >
         <Avatar label={label} autoColor size={20} />
         <Text style={{ marginLeft: 5 }}>
-          {goodDeal.user.firstname} {goodDeal.user.lastname}
+          {goodDeal.user.firstname} {goodDeal.user.lastname} -{' '}
+          {goodDeal.createdAt &&
+            format(new Date(goodDeal.createdAt), 'dd/MM/yyyy')}
         </Text>
       </Stack>
       <View style={styles.content}>

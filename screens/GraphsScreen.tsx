@@ -38,7 +38,9 @@ const GraphsScreen = () => {
     data: sumData,
     loading: sumLoading,
     error: sumError,
-  } = useQuery(GET_TOTAL_SUMS_ACTIVITIES_GRAPH_DATA)
+  } = useQuery(GET_TOTAL_SUMS_ACTIVITIES_GRAPH_DATA, {
+    fetchPolicy: 'no-cache',
+  })
 
   const [barChartTimeUnit, setBarChartTimeUnit] =
     useState<barChartTimeUnitType>('week')
