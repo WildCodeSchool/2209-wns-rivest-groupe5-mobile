@@ -80,7 +80,7 @@ const MobileRoot = ({ resetClient }: any) => {
             drawerItemStyle: { display: user !== null ? 'flex' : 'none' },
           }}
         />
-        <Drawer.Screen name="Bons plans" component={GoodDealsScreen} />
+        <Drawer.Screen name="Astuces" component={GoodDealsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   )

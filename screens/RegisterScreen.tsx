@@ -1,15 +1,9 @@
 import { gql, useMutation } from '@apollo/client'
 import { Stack, Button, TextInput } from '@react-native-material/core'
 import { useState } from 'react'
-import {
-  SafeAreaView,
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native'
+import { SafeAreaView, Text, View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useTheme, Link } from '@react-navigation/native'
+import { Link } from '@react-navigation/native'
 
 const CREATE_USER = gql`
   mutation CreateUser(
@@ -79,13 +73,24 @@ export const RegisterScreen = ({ navigation }) => {
             style={{
               fontWeight: 'bold',
               textAlign: 'center',
-              fontSize: 40,
+              fontSize: 30,
               marginBottom: 10,
             }}
           >
-            Rejoins la communauté WildCarbon
+            Bienvenue !
           </Text>
-          <Stack spacing={20} style={{ marginLeft: 25, marginRight: 25 }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              textAlign: 'center',
+              fontSize: 15,
+              marginBottom: 40,
+            }}
+          >
+            Inscrits-toi pour rejoindre la communeauté, suivre tes émissions et
+            partager tes Astuces !
+          </Text>
+          <Stack spacing={10} style={{ marginLeft: 25, marginRight: 25 }}>
             <TextInput
               label="Prénom"
               value={firstname}
@@ -132,7 +137,7 @@ export const RegisterScreen = ({ navigation }) => {
 
           <Button
             title="S'inscrire"
-            color="#2ECE65"
+            color="#17b2aa"
             tintColor="#FFFFFF"
             style={styles.button}
             loading={loading}
@@ -141,7 +146,7 @@ export const RegisterScreen = ({ navigation }) => {
           />
           <Text style={{ textAlign: 'center', marginTop: 20 }}>
             Déjà membre?{' '}
-            <Link style={{ color: '#2ECE65' }} to={{ screen: 'Connexion' }}>
+            <Link style={{ color: '#17b2aa' }} to={{ screen: 'Connexion' }}>
               Connecte-toi
             </Link>
           </Text>
@@ -159,13 +164,13 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   button: {
-    backgroundColor: '#2ECE65',
-    borderRadius: 10,
+    backgroundColor: '#17b2aa',
+    borderRadius: 5,
     height: 50,
-    marginTop: 50,
+    marginTop: 30,
     marginLeft: 100,
     marginRight: 100,
     display: 'flex',

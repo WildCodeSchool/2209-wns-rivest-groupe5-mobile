@@ -9,7 +9,7 @@ export const GoodDealCardFeedPrimary = () => {
         style={styles.image}
         imageStyle={styles.imagestyle}
       >
-        <Text style={styles.title}>Bons plans</Text>
+        <Text style={styles.title}>Astuces</Text>
       </ImageBackground>
     </View>
   )

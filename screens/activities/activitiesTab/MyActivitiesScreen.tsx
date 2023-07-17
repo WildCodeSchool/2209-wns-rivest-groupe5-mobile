@@ -59,17 +59,17 @@ const MyActivitiesScreen = ({ navigation }: { navigation: any }) => {
   }, [currentPage, loading, activities.totalPages, fetchMoreActivities])
 
   // when the screen is focused, refetch the data to be sure to have actualised data
-  useFocusEffect(
-    useCallback(() => {
-      setActivities(initialPaginatedResultState)
-      const refetchData = async () => {
-        const res = await refetch()
-        setActivities(res.data.getAllMyActivities)
-      }
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setActivities(initialPaginatedResultState)
+  //     const refetchData = async () => {
+  //       const res = await refetch()
+  //       setActivities(res.data.getAllMyActivities)
+  //     }
 
-      refetchData()
-    }, [refetch])
-  )
+  //     refetchData()
+  //   }, [refetch])
+  // )
 
   if (error) {
     return (

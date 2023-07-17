@@ -13,10 +13,7 @@ const GoodDealsScreen = () => {
         component={GoodDealsTab}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Détails Bon Plan"
-        component={GoodDealsDetailsScreen}
-      />
+      <Stack.Screen name="Détails Astuce" component={GoodDealsDetailsScreen} />
     </Stack.Navigator>
   )
 }

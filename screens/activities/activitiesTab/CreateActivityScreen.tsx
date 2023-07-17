@@ -90,11 +90,11 @@ const CreateActivityScreen = ({ navigation }) => {
             style={{
               fontWeight: 'bold',
               textAlign: 'center',
-              fontSize: 40,
-              marginBottom: 20,
+              fontSize: 30,
+              marginBottom: 10,
             }}
           >
-            Enregistrer une nouvelle activité
+            Nouvelle activité
           </Text>
 
           <Stack spacing={20} style={{ marginLeft: 25, marginRight: 25 }}>
@@ -178,7 +178,7 @@ const CreateActivityScreen = ({ navigation }) => {
               label="Date de l'activité"
               variant="outlined"
               value={format(new Date(activityDate), 'dd/MM/yyyy')}
-              editable={false}
+              editable={true}
               trailing={(props) => (
                 <IconButton
                   icon={(props) => (
@@ -196,20 +196,11 @@ const CreateActivityScreen = ({ navigation }) => {
                 onChange={onDateSelected}
               />
             )}
-
-            {datePicker && (
-              <DateTimePicker
-                value={activityDate}
-                mode={'date'}
-                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                onChange={onDateSelected}
-              />
-            )}
           </Stack>
 
           <Button
             title="Enregistrer"
-            color="#003c49"
+            color="#17b2aa"
             tintColor="#fff"
             style={{ margin: 25, padding: 10 }}
             loading={loadingCreateActivity}
@@ -255,7 +246,7 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   MainContainer: {
     flex: 1,

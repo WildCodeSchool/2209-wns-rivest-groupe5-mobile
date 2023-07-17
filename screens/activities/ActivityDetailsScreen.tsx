@@ -1,5 +1,6 @@
-import { Text, StyleSheet, Modal, Button, View } from 'react-native'
 import React, { useState } from 'react'
+import { Text, StyleSheet, Modal, View } from 'react-native'
+import { Button } from '@react-native-material/core'
 import { IActivity } from '../../interfaces/IActivity'
 import { ScrollView } from 'react-native-gesture-handler'
 import { format } from 'date-fns'
@@ -37,9 +38,13 @@ const ActivityDetailsScreen = ({ route, navigation }: any) => {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.editButton}>
-        <Button title="Editer" onPress={handleEditPress} />
-      </View>
+      <Button
+        title="Editer"
+        color="#17b2aa"
+        tintColor="#FFFFFF"
+        style={styles.button}
+        onPress={handleEditPress}
+      />
       <Text style={styles.title}>{activityData.title}</Text>
       <Text style={styles.type}>{activityData.activityType.label}</Text>
       <Text style={styles.date}>
@@ -71,15 +76,11 @@ const styles = StyleSheet.create({
     padding: 5,
     flex: 1,
   },
-  editButton: {
-    marginHorizontal: 50,
-    marginVertical: 20,
-  },
   title: {
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 10,
+    marginVertical: 20,
   },
   type: {
     fontStyle: 'italic',
@@ -91,6 +92,18 @@ const styles = StyleSheet.create({
   description: {
     marginBottom: 50,
     lineHeight: 22,
+  },
+  button: {
+    backgroundColor: '#17b2aa',
+    borderRadius: 5,
+    height: 50,
+    marginTop: 30,
+    marginLeft: 100,
+    marginRight: 100,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: 'bold',
   },
 })
 

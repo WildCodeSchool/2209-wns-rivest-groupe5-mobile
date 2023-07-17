@@ -25,12 +25,12 @@ const ActivitiesTab = () => {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Créer Activité" component={CreateActivityScreen} />
       <Tab.Screen
         name="Mes Activités"
         component={MyActivitiesScreen}
         options={{ unmountOnBlur: true }}
       />
+      <Tab.Screen name="Créer Activité" component={CreateActivityScreen} />
     </Tab.Navigator>
   )
 }

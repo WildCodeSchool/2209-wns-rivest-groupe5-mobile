@@ -14,33 +14,35 @@ const GoodDealsTab = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Liste bons plans"
+      initialRouteName="Liste Astuces"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: keyof typeof Ionicons.glyphMap | undefined
 
-          if (route.name === 'Mes bons plans') {
+          if (route.name === 'Mes Astuces') {
             iconName = focused ? 'book' : 'book-outline'
-          } else if (route.name === 'Tous les bons plans') {
+          } else if (route.name === 'Toutes les Astuces') {
             iconName = focused ? 'albums' : 'albums-outline'
-          } else if (route.name === 'Créer un bon plan') {
+          } else if (route.name === 'Créer une astuce') {
             iconName = focused ? 'add-circle' : 'add-circle-outline'
           }
           return <Ionicons name={iconName} size={size} color={color} />
         },
-        tabBarActiveTintColor: '#003c49',
+        tabBarActiveTintColor: '#17b2aa',
         tabBarInactiveTintColor: 'gray',
       })}
     >
       {user !== null && (
-        <Tab.Screen name="Mes bons plans" component={MyGoodDealsScreen} />
+        <Tab.Screen name="Mes Astuces" component={MyGoodDealsScreen} />
       )}
       <Tab.Screen
-        name="Tous les bons plans"
+        name="Toutes les Astuces"
         component={GoodDealsFeedScreen}
         options={{ unmountOnBlur: true }}
       />
-      <Tab.Screen name="Créer un bon plan" component={CreateGoodDealScreen} />
+      {user !== null && (
+        <Tab.Screen name="Créer une astuce" component={CreateGoodDealScreen} />
+      )}
     </Tab.Navigator>
   )
 }

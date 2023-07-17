@@ -114,8 +114,8 @@ const EditActivityScreen = ({
             style={{
               fontWeight: 'bold',
               textAlign: 'center',
-              fontSize: 40,
-              marginBottom: 20,
+              fontSize: 30,
+              marginBottom: 10,
             }}
           >
             Mettre à jour l'activité
@@ -225,7 +225,7 @@ const EditActivityScreen = ({
 
           <Button
             title="Mettre à jour"
-            color="#003c49"
+            color="#17b2aa"
             tintColor="#fff"
             style={{ margin: 25, marginBottom: 5, padding: 10 }}
             loading={loadingUpdateActivity}
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   MainContainer: {
     flex: 1,
