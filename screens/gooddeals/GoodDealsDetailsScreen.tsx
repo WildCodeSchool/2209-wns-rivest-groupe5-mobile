@@ -12,6 +12,7 @@ import { IGoodDeal } from '../../interfaces/IGoodDeal'
 import { Avatar, Stack } from '@react-native-material/core'
 import HTML from 'react-native-render-html'
 import { format } from 'date-fns'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const GoodDealsDetailsScreen = ({ route }: any) => {
   const { goodDeal }: { goodDeal: IGoodDeal } = route.params
@@ -32,7 +33,7 @@ const GoodDealsDetailsScreen = ({ route }: any) => {
   const default_image = require('../../assets/default-placeholder.png')
 
   return (
-    <View>
+    <ScrollView>
       {goodDeal.image ? (
         <ImageBackground
           source={{ uri: goodDeal.image }}
@@ -78,11 +79,15 @@ const GoodDealsDetailsScreen = ({ route }: any) => {
           </TouchableOpacity>
         )}
       </Stack>
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 5,
+    flex: 1,
+  },
   image: {
     width: '100%',
     height: 200,
